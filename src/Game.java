@@ -15,31 +15,53 @@ public class Game extends JPanel implements Runnable{
     Platform platform2;
     Ball ball;
     // Thread
-    Thread gameThread;
+    Thread thread;
     // Game state
     boolean playStatus = false;
     Game(){
         //newBall();
-        //newPlatforms();
-        new Field();
+        newPlatforms();
+        new Field(this);
         this.setFocusable(true);
-        //gameThread = new Thread(this);
-    }
-    public void drawOnScreen(){
-        Graphics gfx = getGraphics();
-        gfx.setColor(Color.black);
-        gfx.fillRect(0, 0, WIDTH, HEIGHT);
+        thread = new Thread(this);
+        thread.start();
     }
     public void newBall(){
         ball = new Ball();
     }
     public void newPlatforms(){
-        platform1 = new Platform();
-        platform2 = new Platform();
+        platform1 = new Platform(true);
+        platform2 = new Platform(false);
     }
+    public void paint(Graphics gfx1){
+        image = createImage(getWidth(),getHeight());
+        gfx = image.getGraphics();
+        display(gfx);
+        gfx1.drawImage(image,0,0,this);
+    }
+    public void display(Graphics gfx1){
+        //ball.display(gfx);
+        platform1.display(gfx1,true);
+        platform2.display(gfx1,false);
+    ;
+    }
+    // Main game loop
     @Override
     public void run() {
-
+        long lastTime = System.nanoTime();
+        double maxFPS = 60.0;
+        double frameTime = 1000000000/maxFPS;
+        double delta = 0;
+        while(true) {
+            long now = System.nanoTime();
+            delta += (now - lastTime)/frameTime;
+            lastTime = now;
+            if(delta >= 1){
+                repaint();
+                delta--;
+                System.out.println("Running!");
+            }
+        }
     }
 
     public static void main (String args[]){
