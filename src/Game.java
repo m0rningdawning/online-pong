@@ -1,7 +1,10 @@
+import java.awt.image.BufferedImage;
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.imageio.*;
+import java.io.*;
 
 public class Game extends JPanel implements Runnable{
     // Game dimensions
@@ -11,6 +14,7 @@ public class Game extends JPanel implements Runnable{
     // Objects
     Graphics gfx;
     Image image;
+    BufferedImage backgroundImage;
     Platform platform1;
     Platform platform2;
     Ball ball;
@@ -18,13 +22,20 @@ public class Game extends JPanel implements Runnable{
     Thread thread;
     // Game state
     boolean playStatus = false;
-    Game(){
+    Game() throws IOException{
         //newBall();
         newPlatforms();
         new Field(this);
         this.setFocusable(true);
+        backgroundImage = ImageIO.read(new File("/home/paul/GITProjects/online-pong/textures/background.png"));
         thread = new Thread(this);
         thread.start();
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        super.paint(g);
+        g.drawImage(backgroundImage, 0, 0, this);
     }
     public void newBall(){
         ball = new Ball();
@@ -64,8 +75,8 @@ public class Game extends JPanel implements Runnable{
         }
     }
 
-    public static void main (String args[]){
+    public static void main (String args[]) throws IOException{
         // Window frame
-        Game pong = new Game();
+            Game pong = new Game();
     }
 }

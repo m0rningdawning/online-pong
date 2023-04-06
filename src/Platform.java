@@ -5,12 +5,12 @@ import javax.swing.*;
 
 public class Platform{
     int posX, posY;
-    int width = 30, height = 120;
+    int width = 20, height = 100;
     Platform(boolean playerA){
         if (playerA)
             posX = 0;
         else
-            posX = Game.WIDTH - width;
+            posX = Game.WIDTH - (int)(width * 1.5);
         posY = Game.HEIGHT/2 - height/2;
     }
     public void display(Graphics gfx1, boolean playerA){
