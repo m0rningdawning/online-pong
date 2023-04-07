@@ -18,16 +18,26 @@ public class Game extends JPanel implements Runnable{
     Platform platform1;
     Platform platform2;
     Ball ball;
+    InputListener listener;
+
     // Thread
     Thread thread;
+
     // Game state
     boolean playStatus = false;
+
     Game() throws IOException{
         //newBall();
         newPlatforms();
         new Field(this);
         this.setFocusable(true);
         backgroundImage = ImageIO.read(new File("/home/paul/GITProjects/online-pong/textures/background.png"));
+
+        // Input listener
+        listener = new InputListener();
+        listener.InputListener(platform1, platform2);
+        this.addKeyListener(listener);
+
         thread = new Thread(this);
         thread.start();
     }
@@ -37,6 +47,7 @@ public class Game extends JPanel implements Runnable{
         super.paint(g);
         g.drawImage(backgroundImage, 0, 0, this);
     }
+
     public void newBall(){
         ball = new Ball();
     }
@@ -44,18 +55,21 @@ public class Game extends JPanel implements Runnable{
         platform1 = new Platform(true);
         platform2 = new Platform(false);
     }
+
     public void paint(Graphics gfx1){
         image = createImage(getWidth(),getHeight());
         gfx = image.getGraphics();
         display(gfx);
         gfx1.drawImage(image,0,0,this);
     }
+
     public void display(Graphics gfx1){
         //ball.display(gfx);
         platform1.display(gfx1,true);
         platform2.display(gfx1,false);
     ;
     }
+
     // Main game loop
     @Override
     public void run() {
@@ -69,6 +83,7 @@ public class Game extends JPanel implements Runnable{
             lastTime = now;
             if(delta >= 1){
                 repaint();
+                listener.updatePlatforms();
                 delta--;
                 System.out.println("Running!");
             }
