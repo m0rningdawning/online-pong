@@ -7,10 +7,12 @@ import javax.imageio.*;
 import java.io.*;
 
 public class Game extends JPanel implements Runnable{
+
     // Game dimensions
     static final int WIDTH = 800;
     static final int HEIGHT = 600;
     static final Dimension FIELD_SIZE = new Dimension(WIDTH, HEIGHT);
+
     // Objects
     Graphics gfx;
     Image image;
@@ -27,7 +29,7 @@ public class Game extends JPanel implements Runnable{
     boolean playStatus = false;
 
     Game() throws IOException{
-        //newBall();
+        newBall();
         newPlatforms();
         new Field(this);
         this.setFocusable(true);
@@ -51,6 +53,7 @@ public class Game extends JPanel implements Runnable{
     public void newBall(){
         ball = new Ball();
     }
+
     public void newPlatforms(){
         platform1 = new Platform(true);
         platform2 = new Platform(false);
@@ -64,7 +67,7 @@ public class Game extends JPanel implements Runnable{
     }
 
     public void display(Graphics gfx1){
-        //ball.display(gfx);
+        ball.display(gfx1);
         platform1.display(gfx1,true);
         platform2.display(gfx1,false);
     ;
@@ -84,6 +87,7 @@ public class Game extends JPanel implements Runnable{
             if(delta >= 1){
                 repaint();
                 listener.updatePlatforms();
+                ball.updateBall(platform1, platform2);
                 delta--;
                 System.out.println("Running!");
             }
@@ -91,7 +95,6 @@ public class Game extends JPanel implements Runnable{
     }
 
     public static void main (String args[]) throws IOException{
-        // Window frame
             Game pong = new Game();
     }
 }
