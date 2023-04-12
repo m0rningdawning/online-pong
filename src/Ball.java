@@ -1,5 +1,6 @@
 import java.util.*;
 import java.awt.*;
+import java.lang.Thread;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -26,14 +27,34 @@ public class Ball{
 
         // Collision detection of the ball with the vertical walls
         if (posX < 0) {
+            //Game.setStatus(false);
             resetBall(1);
             platform1.setPos(true);
             platform2.setPos(false);
+            platform2.score++;
+            /*
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Game.setStatus(true);
+            */
         }
         if (posX > Game.WIDTH - width) {
+            //Game.setStatus(false);
             resetBall(-1);
             platform1.setPos(true);
             platform2.setPos(false);
+            platform1.score++;
+            /*
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Game.setStatus(true);
+            */
         }
         if (posY < 0 || posY > Game.HEIGHT - height * 3) {
             dirY = -dirY;

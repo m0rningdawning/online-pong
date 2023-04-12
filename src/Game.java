@@ -26,22 +26,26 @@ public class Game extends JPanel implements Runnable{
     Thread thread;
 
     // Game state
-    boolean playStatus = false;
+    static boolean playStatus;
 
     Game() throws IOException{
         newBall();
         newPlatforms();
         new Field(this);
         this.setFocusable(true);
-        backgroundImage = ImageIO.read(new File("/home/paul/GITProjects/online-pong/textures/background.png"));
+        backgroundImage = ImageIO.read(new File("textures/background.png"));
 
         // Input listener
         listener = new InputListener();
         listener.InputListener(platform1, platform2);
         this.addKeyListener(listener);
 
+        // Thread
         thread = new Thread(this);
         thread.start();
+
+        // Play status
+        playStatus = true;
     }
 
     public void paintComponent(Graphics g) {
@@ -80,7 +84,7 @@ public class Game extends JPanel implements Runnable{
         double maxFPS = 60.0;
         double frameTime = 1000000000/maxFPS;
         double delta = 0;
-        while(true) {
+        while(playStatus) {
             long now = System.nanoTime();
             delta += (now - lastTime)/frameTime;
             lastTime = now;
