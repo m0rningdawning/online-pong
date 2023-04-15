@@ -1,7 +1,6 @@
 import java.awt.event.*;
 
 public class InputListener extends KeyAdapter{
-    private final int moveSpeed = 10;
     private Platform platform1;
     private Platform platform2;
     private boolean isWPressed = false;
@@ -16,6 +15,12 @@ public class InputListener extends KeyAdapter{
 
     public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ESCAPE){
+            System.exit(0);
+        }
+        if (key == KeyEvent.VK_SPACE) {
+            Game.setPlayStatus(!Game.playStatus);
+        }
         if (key == KeyEvent.VK_W){
             isWPressed = true;
         }

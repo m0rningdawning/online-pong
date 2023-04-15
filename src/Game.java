@@ -13,6 +13,9 @@ public class Game extends JPanel implements Runnable{
     static final int HEIGHT = 600;
     static final Dimension FIELD_SIZE = new Dimension(WIDTH, HEIGHT);
 
+    // Game state
+    static boolean playStatus = false;
+
     // Objects
     Graphics gfx;
     Image image;
@@ -24,9 +27,6 @@ public class Game extends JPanel implements Runnable{
 
     // Thread
     Thread thread;
-
-    // Game state
-    static boolean playStatus;
 
     Game() throws IOException{
         newBall();
@@ -42,10 +42,19 @@ public class Game extends JPanel implements Runnable{
 
         // Thread
         thread = new Thread(this);
-        thread.start();
+        startThread();
+    }
 
-        // Play status
-        playStatus = true;
+    public void startThread(){
+        thread.start();
+    }
+
+    public void stopThread(){
+        thread.stop();
+    }
+
+    public static void setPlayStatus(boolean status){
+        playStatus = status;
     }
 
     public void paintComponent(Graphics g) {
@@ -74,7 +83,6 @@ public class Game extends JPanel implements Runnable{
         ball.display(gfx1);
         platform1.display(gfx1,true);
         platform2.display(gfx1,false);
-    ;
     }
 
     // Main game loop
@@ -84,16 +92,18 @@ public class Game extends JPanel implements Runnable{
         double maxFPS = 60.0;
         double frameTime = 1000000000/maxFPS;
         double delta = 0;
-        while(playStatus) {
+        while (!playStatus){
+            listener.keyPressed(new KeyEvent(this, 0, 0, 0, 0, ' '));
+        }
+        while(playStatus){
             long now = System.nanoTime();
-            delta += (now - lastTime)/frameTime;
+            delta += (now - lastTime) / frameTime;
             lastTime = now;
-            if(delta >= 1){
-                repaint();
-                listener.updatePlatforms();
+            if (delta >= 1) {
                 ball.updateBall(platform1, platform2);
+                listener.updatePlatforms();
+                repaint();
                 delta--;
-                System.out.println("Running!");
             }
         }
     }
