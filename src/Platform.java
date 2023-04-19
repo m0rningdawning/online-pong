@@ -23,10 +23,10 @@ public class Platform{
     }
 
     public void drawScore(Graphics gfx1, boolean playerA) {
-        Font font = new Font("ROBOTO", Font.PLAIN, 50);
+        Font font = new Font("ARIAL", Font.PLAIN, 48);
         setScorePos(gfx1, playerA, font);
         gfx1.setFont(font);
-        gfx1.drawString(Integer.toString(score), sPosX, 50);
+        gfx1.drawString(Integer.toString(score), sPosX, 48);
     }
 
     public void setPos(boolean playerA){
@@ -40,7 +40,7 @@ public class Platform{
     public void setScorePos(Graphics g, boolean playerA, Font font) {
         int strWidth = g.getFontMetrics(font).stringWidth(Integer.toString(score));
         if(playerA)
-            sPosX = Game.WIDTH/2 - strWidth - Game.HEIGHT/8;
+            sPosX = Game.WIDTH/2 - strWidth * 2 - Game.HEIGHT/8;
         else
             sPosX = Game.WIDTH/2 + Game.HEIGHT/8;
     }

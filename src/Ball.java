@@ -27,11 +27,11 @@ public class Ball{
 
         // Collision detection of the ball with the vertical walls
         if (posX < 0) {
-            //Game.setStatus(false);
             resetBall(1);
             platform1.setPos(true);
             platform2.setPos(false);
             platform2.score++;
+            Game.player1Ready = Game.player2Ready = false;
             /*
             try {
                 Thread.sleep(2000);
@@ -42,11 +42,11 @@ public class Ball{
             */
         }
         if (posX > Game.WIDTH - width) {
-            //Game.setStatus(false);
             resetBall(-1);
             platform1.setPos(true);
             platform2.setPos(false);
             platform1.score++;
+            Game.player1Ready = Game.player2Ready = false;
             /*
             try {
                 Thread.sleep(2000);

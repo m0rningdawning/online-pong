@@ -19,7 +19,7 @@ public class InputListener extends KeyAdapter{
             System.exit(0);
         }
         if (key == KeyEvent.VK_SPACE) {
-            Game.setPlayStatus(!Game.playStatus);
+            Game.player1Ready = Game.player2Ready = true;
         }
         if (key == KeyEvent.VK_W){
             isWPressed = true;

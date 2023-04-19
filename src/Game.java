@@ -14,7 +14,11 @@ public class Game extends JPanel implements Runnable{
     static final Dimension FIELD_SIZE = new Dimension(WIDTH, HEIGHT);
 
     // Game state
-    static boolean playStatus = false;
+    static boolean playStatus = true;
+
+    // Player readiness
+    static boolean player1Ready = false;
+    static boolean player2Ready = false;
 
     // Objects
     Graphics gfx;
@@ -53,10 +57,6 @@ public class Game extends JPanel implements Runnable{
         thread.stop();
     }
 
-    public static void setPlayStatus(boolean status){
-        playStatus = status;
-    }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         super.paint(g);
@@ -92,18 +92,28 @@ public class Game extends JPanel implements Runnable{
         double maxFPS = 60.0;
         double frameTime = 1000000000/maxFPS;
         double delta = 0;
-        while (!playStatus){
-            listener.keyPressed(new KeyEvent(this, 0, 0, 0, 0, ' '));
-        }
-        while(playStatus){
-            long now = System.nanoTime();
-            delta += (now - lastTime) / frameTime;
-            lastTime = now;
-            if (delta >= 1) {
-                ball.updateBall(platform1, platform2);
-                listener.updatePlatforms();
-                repaint();
-                delta--;
+        long now;
+        while (playStatus) {
+            while (!player1Ready || !player2Ready) {
+                now = System.nanoTime();
+                delta += (now - lastTime) / frameTime;
+                lastTime = now;
+                if (delta >= 1) {
+                    //repaint();
+                    listener.keyPressed(new KeyEvent(this, 0, 0, 0, 0, ' '));
+                    delta--;
+                }
+            }
+            while (player1Ready && player2Ready) {
+                now = System.nanoTime();
+                delta += (now - lastTime) / frameTime;
+                lastTime = now;
+                if (delta >= 1) {
+                    ball.updateBall(platform1, platform2);
+                    listener.updatePlatforms();
+                    repaint();
+                    delta--;
+                }
             }
         }
     }
