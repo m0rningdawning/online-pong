@@ -17,16 +17,25 @@ public class Ball{
         posX += speed * dirX;
         posY += speed * dirY;
 
-        // Collision detection of the ball with the platforms
+        // Collision detection of the ball with the horizontal sides of the screen
+        if (posY < 0 || posY > Game.HEIGHT - height * 3) {
+            dirY = -dirY;
+        }
+
+        // Collision detection of the ball with platforms
+
+        // Platform one
         if (posX < platform1.posX + platform1.width && posY + height > platform1.posY && posY < platform1.posY + platform1.height) {
             dirX = -dirX;
         }
+
+        // Platform two
         if (posX + width > platform2.posX && posY + height > platform2.posY && posY < platform2.posY + platform2.height) {
             dirX = -dirX;
         }
 
-        // Collision detection of the ball with the vertical walls
-        if (posX < 0) {
+        // Score registration
+        if (posX < platform1.width - width / 2) {
             resetBall(1);
             platform1.setPos(true);
             platform2.setPos(false);
@@ -41,7 +50,8 @@ public class Ball{
             Game.setStatus(true);
             */
         }
-        if (posX > Game.WIDTH - width) {
+
+        if (posX > Game.WIDTH - width * 2) {
             resetBall(-1);
             platform1.setPos(true);
             platform2.setPos(false);
@@ -55,9 +65,6 @@ public class Ball{
             }
             Game.setStatus(true);
             */
-        }
-        if (posY < 0 || posY > Game.HEIGHT - height * 3) {
-            dirY = -dirY;
         }
     }
 
