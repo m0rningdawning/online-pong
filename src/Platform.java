@@ -4,8 +4,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Platform{
-    int posX, posY;
-    int sPosX;
+    double posX, posY;
+    double sPosX;
     static final int width = 20, height = 100;
     int score = 0;
 
@@ -18,7 +18,7 @@ public class Platform{
             gfx1.setColor(Color.blue);
         else
             gfx1.setColor(Color.yellow);
-        gfx1.fillRect(posX, posY, width, height);
+        gfx1.fillRect((int)posX, (int)posY, width, height);
         drawScore(gfx1, playerA);
     }
 
@@ -26,7 +26,7 @@ public class Platform{
         Font font = new Font("ARIAL", Font.PLAIN, 48);
         setScorePos(gfx1, playerA, font);
         gfx1.setFont(font);
-        gfx1.drawString(Integer.toString(score), sPosX, 48);
+        gfx1.drawString(Integer.toString(score), (int)sPosX, 48);
     }
 
     public void setPos(boolean playerA){

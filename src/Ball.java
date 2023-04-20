@@ -5,17 +5,34 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Ball{
-    int posX, posY;
-    int dirX = 1, dirY = 1;
-    static final int width = 20, height = 20, speed = 5;
+    static final int width = 20, height = 20, startingSpeed = 6;
+    double posX, posY, currentSpeed = startingSpeed;
+    double dirX, dirY;
 
     Ball(){
         setPos();
+        initializeDirection();
+    }
+
+    public void initializeDirection(){
+        do {
+            dirX = -1 + (Math.random() * 2);
+        } while (dirX == 0);
+        do {
+            dirY = -1 + (Math.random() * 2);
+        } while (dirY == 0);
+    }
+
+    public void setDir(boolean playerA){
+        if (playerA)
+            dirX = 0.5 + (Math.random() * 0.5);
+        else
+            dirX = -1.0 + (Math.random() * 0.5);
     }
 
     public void updateBall(Platform platform1, Platform platform2){
-        posX += speed * dirX;
-        posY += speed * dirY;
+        posX += currentSpeed * dirX;
+        posY += currentSpeed * dirY;
 
         // Collision detection of the ball with the horizontal sides of the screen
         if (posY < 0 || posY > Game.HEIGHT - height * 3) {
@@ -26,17 +43,19 @@ public class Ball{
 
         // Platform one
         if (posX < platform1.posX + platform1.width && posY + height > platform1.posY && posY < platform1.posY + platform1.height) {
-            dirX = -dirX;
+            currentSpeed += 0.2;
+            setDir(true);
         }
 
         // Platform two
         if (posX + width > platform2.posX && posY + height > platform2.posY && posY < platform2.posY + platform2.height) {
-            dirX = -dirX;
+            currentSpeed += 0.2;
+            setDir(false);
         }
 
         // Score registration
         if (posX < platform1.width - width / 2) {
-            resetBall(1);
+            resetBall(0.5 + (Math.random() * 0.5));
             platform1.setPos(true);
             platform2.setPos(false);
             platform2.score++;
@@ -52,7 +71,7 @@ public class Ball{
         }
 
         if (posX > Game.WIDTH - width * 2) {
-            resetBall(-1);
+            resetBall(-1.0 + (Math.random() * 0.5));
             platform1.setPos(true);
             platform2.setPos(false);
             platform1.score++;
@@ -68,8 +87,10 @@ public class Ball{
         }
     }
 
-    public void resetBall(int scoredDir){
+    public void resetBall(double scoredDir){
         setPos();
+        initializeDirection();
+        currentSpeed = startingSpeed;
         Random rand = new Random();
         dirX = scoredDir;
         dirY = rand.nextInt(2);
@@ -79,7 +100,7 @@ public class Ball{
 
     public void display(Graphics gfx1){
         gfx1.setColor(Color.WHITE);
-        gfx1.fillOval(posX, posY, width, height);
+        gfx1.fillOval((int)posX, (int)posY, width, height);
     }
 
     public void setPos(){

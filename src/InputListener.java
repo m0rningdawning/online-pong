@@ -3,10 +3,10 @@ import java.awt.event.*;
 public class InputListener extends KeyAdapter{
     private Platform platform1;
     private Platform platform2;
-    private boolean isWPressed = false;
-    private boolean isSPressed = false;
-    private boolean isUpPressed = false;
-    private boolean isDownPressed = false;
+    static boolean isWPressed = false;
+    static boolean isSPressed = false;
+    static boolean isUpPressed = false;
+    static boolean isDownPressed = false;
 
     public void InputListener(Platform platform1, Platform platform2){
         this.platform1 = platform1;
