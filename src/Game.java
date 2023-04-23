@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.imageio.*;
 import java.io.*;
 
-public class Game extends JPanel implements Runnable{
+public class Game extends JPanel implements Runnable {
 
     // Game dimensions
     static final int WIDTH = 800;
@@ -21,22 +21,22 @@ public class Game extends JPanel implements Runnable{
     static boolean player2Ready = false;
 
     // Objects
-    Graphics gfx;
-    Image image;
     BufferedImage backgroundImage;
     Platform platform1;
     Platform platform2;
     Ball ball;
     InputListener listener;
+    Image image;
 
     // Thread
     Thread thread;
 
-    Game() throws IOException{
+    Game() throws IOException {
         newBall();
         newPlatforms();
         new Field(this);
         this.setFocusable(true);
+
         backgroundImage = ImageIO.read(new File("textures/background.png"));
 
         // Input listener
@@ -49,40 +49,30 @@ public class Game extends JPanel implements Runnable{
         startThread();
     }
 
-    public void startThread(){
+    public void startThread() {
         thread.start();
     }
 
-    public void stopThread(){
-        thread.stop();
+    public void stopThread() {
+        thread.interrupt();
     }
 
-    public void paintComponent(Graphics g) {
+    @Override
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        super.paint(g);
         g.drawImage(backgroundImage, 0, 0, this);
+        ball.display(g);
+        platform1.display(g, true);
+        platform2.display(g, false);
     }
 
-    public void newBall(){
+    public void newBall() {
         ball = new Ball();
     }
 
-    public void newPlatforms(){
+    public void newPlatforms() {
         platform1 = new Platform(true);
         platform2 = new Platform(false);
-    }
-
-    public void paint(Graphics gfx1){
-        image = createImage(getWidth(),getHeight());
-        gfx = image.getGraphics();
-        display(gfx);
-        gfx1.drawImage(image,0,0,this);
-    }
-
-    public void display(Graphics gfx1){
-        ball.display(gfx1);
-        platform1.display(gfx1,true);
-        platform2.display(gfx1,false);
     }
 
     // Main game loop
@@ -90,7 +80,7 @@ public class Game extends JPanel implements Runnable{
     public void run() {
         long lastTime = System.nanoTime();
         double maxFPS = 60.0;
-        double frameTime = 1000000000/maxFPS;
+        double frameTime = 1000000000 / maxFPS;
         double delta = 0;
         long now;
         while (playStatus) {
@@ -98,6 +88,7 @@ public class Game extends JPanel implements Runnable{
                 now = System.nanoTime();
                 delta += (now - lastTime) / frameTime;
                 lastTime = now;
+                repaint();
                 if (delta >= 1) {
                     //repaint();
                     listener.keyPressed(new KeyEvent(this, 0, 0, 0, 0, ' '));
@@ -118,7 +109,8 @@ public class Game extends JPanel implements Runnable{
         }
     }
 
-    public static void main (String args[]) throws IOException{
-            Game pong = new Game();
+    public static void main(String args[]) throws IOException {
+        Game pong = new Game();
     }
 }
+
