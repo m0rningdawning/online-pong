@@ -20,18 +20,21 @@ public class Game extends JPanel implements Runnable {
     static boolean player1Ready = false;
     static boolean player2Ready = false;
 
-    // Objects
+    // Background Image with double-buffering
+    BufferedImage bufferedImage;
     BufferedImage backgroundImage;
+
+    // Objects
+    Graphics gfx;
     Platform platform1;
     Platform platform2;
     Ball ball;
     InputListener listener;
-    Image image;
 
     // Thread
     Thread thread;
 
-    Game() throws IOException {
+    Game() throws IOException{
         newBall();
         newPlatforms();
         new Field(this);
@@ -49,30 +52,35 @@ public class Game extends JPanel implements Runnable {
         startThread();
     }
 
-    public void startThread() {
+    public void startThread(){
         thread.start();
     }
 
-    public void stopThread() {
+    public void stopThread(){
         thread.interrupt();
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, this);
-        ball.display(g);
-        platform1.display(g, true);
-        platform2.display(g, false);
-    }
-
-    public void newBall() {
+    public void newBall(){
         ball = new Ball();
     }
 
-    public void newPlatforms() {
+    public void newPlatforms(){
         platform1 = new Platform(true);
         platform2 = new Platform(false);
+    }
+
+    public void paint(Graphics g){
+        bufferedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+        gfx = bufferedImage.getGraphics();
+        display(gfx);
+        g.drawImage(bufferedImage, 0, 0,this);
+    }
+
+    public void display(Graphics g){
+        g.drawImage(backgroundImage, 0, 0, this);
+        ball.display(g);
+        platform1.display(g,true);
+        platform2.display(g,false);
     }
 
     // Main game loop
@@ -90,7 +98,6 @@ public class Game extends JPanel implements Runnable {
                 lastTime = now;
                 repaint();
                 if (delta >= 1) {
-                    //repaint();
                     listener.keyPressed(new KeyEvent(this, 0, 0, 0, 0, ' '));
                     delta--;
                 }
