@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Ball{
-    static final int width = 20, height = 20, startingSpeed = 6;
+    static final int width = 20, height = 20, startingSpeed = 10;
     double posX, posY, currentSpeed = startingSpeed;
     double dirX, dirY;
 
@@ -31,8 +31,11 @@ public class Ball{
     }
 
     public void updateBall(Platform platform1, Platform platform2){
-        posX += currentSpeed * dirX;
-        posY += currentSpeed * dirY;
+        //posX += currentSpeed * dirX;
+        //posY += currentSpeed * dirY;
+
+        posX += Math.max(-5, Math.min(5, currentSpeed * dirX));
+        posY += Math.max(-5, Math.min(5, currentSpeed * dirY));
 
         // Collision detection of the ball with the horizontal sides of the screen
         if (posY < 0 || posY > Game.HEIGHT - height * 3) {
@@ -60,14 +63,6 @@ public class Ball{
             platform2.setPos(false);
             platform2.score++;
             Game.player1Ready = Game.player2Ready = false;
-            /*
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Game.setStatus(true);
-            */
         }
 
         if (posX > Game.WIDTH - width * 2) {
@@ -76,14 +71,6 @@ public class Ball{
             platform2.setPos(false);
             platform1.score++;
             Game.player1Ready = Game.player2Ready = false;
-            /*
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Game.setStatus(true);
-            */
         }
     }
 

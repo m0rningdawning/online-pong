@@ -39,6 +39,7 @@ public class Game extends JPanel implements Runnable {
         newPlatforms();
         new Field(this);
         this.setFocusable(true);
+        this.requestFocus();
 
         backgroundImage = ImageIO.read(new File("textures/background.png"));
 
