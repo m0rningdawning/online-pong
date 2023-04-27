@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Ball{
-    static final int width = 20, height = 20, startingSpeed = 10;
+    static final int width = 20, height = 20, startingSpeed = 7;
     double posX, posY, currentSpeed = startingSpeed;
     double dirX, dirY;
 
@@ -34,8 +34,8 @@ public class Ball{
         //posX += currentSpeed * dirX;
         //posY += currentSpeed * dirY;
 
-        posX += Math.max(-5, Math.min(5, currentSpeed * dirX));
-        posY += Math.max(-5, Math.min(5, currentSpeed * dirY));
+        posX += Math.max(-currentSpeed, Math.min(currentSpeed, currentSpeed * dirX));
+        posY += Math.max(-currentSpeed, Math.min(currentSpeed, currentSpeed * dirY));
 
         // Collision detection of the ball with the horizontal sides of the screen
         if (posY < 0 || posY > Game.HEIGHT - height * 3) {
