@@ -22,6 +22,9 @@ public class Game extends JPanel implements Runnable {
     static boolean player1Ready = false;
     static boolean player2Ready = false;
 
+    // Online status
+    static boolean isOnline;
+
     // Background Image with double-buffering
     BufferedImage bufferedImage;
     BufferedImage backgroundImage;
@@ -36,6 +39,8 @@ public class Game extends JPanel implements Runnable {
     // Thread
     Thread thread;
 
+    // Server and client
+    Server server;
     Client client;
 
     Game() throws IOException{
@@ -49,7 +54,7 @@ public class Game extends JPanel implements Runnable {
 
         // Input listener
         listener = new InputListener();
-        listener.InputListener(platform1, platform2);
+        listener.InputListener(platform1, platform2, this);
         this.addKeyListener(listener);
 
         // Thread
@@ -57,37 +62,54 @@ public class Game extends JPanel implements Runnable {
         startThread();
 
         // UDP/IP Test
-        testCanSendAndReceivePacket();
+        initNetwork();
 
     }
 
     // UDP/IP Test
 
-    public void setup() throws SocketException, UnknownHostException {
-        new Server().start();
-        client = new Client();
+    public void initNetwork() throws IOException {
+        if (JOptionPane.showConfirmDialog(this, "Do you want to play online?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
+            if (JOptionPane.showConfirmDialog(this, "Do you want to run the server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
+                String port = JOptionPane.showInputDialog(this, "Please enter the server port(49152 - 65535; default: 50000): ");
+                InetAddress ipOnline = null;
+                try {
+                    ipOnline = InetAddress.getLocalHost();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+                assert ipOnline != null;
+                JOptionPane.showMessageDialog(this, "Ip address: " + ipOnline.getHostAddress() + "\nPort: " + port);
+                setupServer(Integer.parseInt(port));
+                isOnline = true;
+            } else {
+                String port = JOptionPane.showInputDialog(this, "Please enter the server port: ");
+                String ip = JOptionPane.showInputDialog(this, "Please enter the server IP: ");
+                setupClient(ip, port);
+            }
+        } else {
+            isOnline = false;
+        }
     }
 
+    public void setupServer(int port) throws SocketException, UnknownHostException {
+        server = new Server(port);
+        server.start();
+        client = new Client(InetAddress.getLoopbackAddress().getHostName(), server.getServerPort());
+    }
+
+    public void setupClient(String ip, String port) throws IOException {
+        client = new Client(ip, Integer.parseInt(port));
+    }
     public void testCanSendAndReceivePacket() throws IOException {
-        setup();
-        String echo = client.sendEcho("hello server");
-        System.out.println("Sent message: hello server");
-        System.out.println("Received echo: " + echo);
-        if(!"hello server".equals(echo)) {
+        String echo = client.sendEcho("Package received!");
+        if(!"Package received!".equals(echo)) {
             System.out.println("Test failed: Echo did not match sent message");
             throw new AssertionError();
         }
-        echo = client.sendEcho("server is working");
-        System.out.println("Sent message: server is working");
-        System.out.println("Received echo: " + echo);
-        if(echo.equals("hello server")) {
-            System.out.println("Test failed: Echo matched previous message");
-            throw new AssertionError();
-        }
-        tearDown();
     }
 
-    public void tearDown() throws IOException {
+    public void dropServer() throws IOException {
         client.sendEcho("end");
         client.close();
     }

@@ -1,15 +1,26 @@
 package network;
 
+import network.*;
+import java.awt.image.BufferedImage;
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.imageio.*;
+import java.io.*;
 import java.net.*;
-import java.io.IOException;
 
 public class Server extends Thread {
     private DatagramSocket socket;
     private boolean running;
     private byte[] buf = new byte[256];
 
-    public Server() throws SocketException {
-        socket = new DatagramSocket(4445);
+    public Server(int port) throws SocketException {
+        socket = new DatagramSocket(port);
+    }
+
+    public int getServerPort(){
+        return socket.getPort();
     }
 
     public void run() {
@@ -29,6 +40,7 @@ public class Server extends Thread {
             packet = new DatagramPacket(buf, buf.length, address, port);
             String received
                     = new String(packet.getData(), 0, packet.getLength());
+            System.out.println(received);
 
             if (received.equals("end")) {
                 running = false;
