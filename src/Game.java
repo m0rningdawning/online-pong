@@ -1,3 +1,4 @@
+import network.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.awt.*;
@@ -5,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.imageio.*;
 import java.io.*;
+import java.net.*;
 
 public class Game extends JPanel implements Runnable {
 
@@ -34,6 +36,8 @@ public class Game extends JPanel implements Runnable {
     // Thread
     Thread thread;
 
+    Client client;
+
     Game() throws IOException{
         newBall();
         newPlatforms();
@@ -51,6 +55,41 @@ public class Game extends JPanel implements Runnable {
         // Thread
         thread = new Thread(this);
         startThread();
+
+        // UDP/IP Test
+        testCanSendAndReceivePacket();
+
+    }
+
+    // UDP/IP Test
+
+    public void setup() throws SocketException, UnknownHostException {
+        new Server().start();
+        client = new Client();
+    }
+
+    public void testCanSendAndReceivePacket() throws IOException {
+        setup();
+        String echo = client.sendEcho("hello server");
+        System.out.println("Sent message: hello server");
+        System.out.println("Received echo: " + echo);
+        if(!"hello server".equals(echo)) {
+            System.out.println("Test failed: Echo did not match sent message");
+            throw new AssertionError();
+        }
+        echo = client.sendEcho("server is working");
+        System.out.println("Sent message: server is working");
+        System.out.println("Received echo: " + echo);
+        if(echo.equals("hello server")) {
+            System.out.println("Test failed: Echo matched previous message");
+            throw new AssertionError();
+        }
+        tearDown();
+    }
+
+    public void tearDown() throws IOException {
+        client.sendEcho("end");
+        client.close();
     }
 
     public void startThread(){
