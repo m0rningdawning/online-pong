@@ -1,3 +1,5 @@
+package core;
+
 import network.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -25,14 +27,16 @@ public class InputListener extends KeyAdapter{
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_ESCAPE){
             System.exit(0);
+            /*
             try {
                 pong.dropServer();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
+            */
         }
         if (key == KeyEvent.VK_SPACE) {
-            Game.player1Ready = Game.player2Ready = true;
+            pong.player1Ready = pong.player2Ready = true;
         }
         if (key == KeyEvent.VK_W){
             isWPressed = true;
@@ -67,35 +71,19 @@ public class InputListener extends KeyAdapter{
     public void updatePlatforms() {
         if (isWPressed && platform1.posY > 0) {
             platform1.posY -= 10;
-            try {
-                pong.testCanSendAndReceivePacket();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            pong.sendData(0);
         }
         if (isSPressed && platform1.posY < Game.HEIGHT - platform1.height * 1.4) {
             platform1.posY += 10;
-            try {
-                pong.testCanSendAndReceivePacket();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            pong.sendData(0);
         }
         if (isUpPressed && platform2.posY > 0) {
             platform2.posY -= 10;
-            try {
-                pong.testCanSendAndReceivePacket();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            pong.sendData(1);
         }
         if (isDownPressed && platform2.posY < Game.HEIGHT - platform2.height * 1.4) {
             platform2.posY += 10;
-            try {
-                pong.testCanSendAndReceivePacket();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            pong.sendData(1);
         }
     }
 }

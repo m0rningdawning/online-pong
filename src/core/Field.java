@@ -1,3 +1,5 @@
+package core;
+
 import javax.swing.*;
 
 public class Field extends JFrame{

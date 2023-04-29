@@ -1,3 +1,5 @@
+package core;
+
 import java.util.*;
 import java.awt.*;
 import java.lang.Thread;
@@ -5,7 +7,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Ball{
-    static final int width = 20, height = 20, startingSpeed = 7;
+    static final int width = 20, height = 20, startingSpeed = 6;
     double posX, posY, currentSpeed = startingSpeed;
     double dirX, dirY;
 
@@ -30,7 +32,7 @@ public class Ball{
             dirX = -1.0 + (Math.random() * 0.5);
     }
 
-    public void updateBall(Platform platform1, Platform platform2){
+    public void updateBall(Game pong, Platform platform1, Platform platform2){
         //posX += currentSpeed * dirX;
         //posY += currentSpeed * dirY;
 
@@ -62,7 +64,7 @@ public class Ball{
             platform1.setPos(true);
             platform2.setPos(false);
             platform2.score++;
-            Game.player1Ready = Game.player2Ready = false;
+            pong.player1Ready = pong.player2Ready = false;
         }
 
         if (posX > Game.WIDTH - width * 2) {
@@ -70,7 +72,7 @@ public class Ball{
             platform1.setPos(true);
             platform2.setPos(false);
             platform1.score++;
-            Game.player1Ready = Game.player2Ready = false;
+            pong.player1Ready = pong.player2Ready = false;
         }
     }
 

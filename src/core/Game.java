@@ -1,3 +1,5 @@
+package core;
+
 import network.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
@@ -19,8 +21,8 @@ public class Game extends JPanel implements Runnable {
     static boolean playStatus = true;
 
     // Player readiness
-    static boolean player1Ready = false;
-    static boolean player2Ready = false;
+    public boolean player1Ready = false;
+    public boolean player2Ready = false;
 
     // Online status
     static boolean isOnline;
@@ -80,7 +82,7 @@ public class Game extends JPanel implements Runnable {
                 }
                 assert ipOnline != null;
                 JOptionPane.showMessageDialog(this, "Ip address: " + ipOnline.getHostAddress() + "\nPort: " + port);
-                setupServer(Integer.parseInt(port));
+                setupServerAndClient(Integer.parseInt(port));
                 isOnline = true;
             } else {
                 String port = JOptionPane.showInputDialog(this, "Please enter the server port: ");
@@ -92,28 +94,33 @@ public class Game extends JPanel implements Runnable {
         }
     }
 
-    public void setupServer(int port) throws SocketException, UnknownHostException {
-        server = new Server(port);
+    public synchronized void setupServerAndClient(int port) throws SocketException, UnknownHostException {
+        server = new Server(this, port);
         server.start();
-        client = new Client(InetAddress.getLoopbackAddress().getHostName(), server.getServerPort());
+        client = new Client(InetAddress.getLoopbackAddress().getHostName(), port);
+        client.start();
     }
 
-    public void setupClient(String ip, String port) throws IOException {
+    public synchronized void setupClient(String ip, String port) throws IOException {
         client = new Client(ip, Integer.parseInt(port));
+        client.start();
     }
-    public void testCanSendAndReceivePacket() throws IOException {
-        String echo = client.sendEcho("Package received!");
-        if(!"Package received!".equals(echo)) {
-            System.out.println("Test failed: Echo did not match sent message");
-            throw new AssertionError();
+
+    public void sendData(int type){
+        switch (type){
+            case 0:
+                client.sendData("p1ready".getBytes());
+                break;
+            case 1:
+                client.sendData("p2ready".getBytes());
+                break;
         }
     }
-
+    /*
     public void dropServer() throws IOException {
-        client.sendEcho("end");
         client.close();
     }
-
+    */
     public void startThread(){
         thread.start();
     }
@@ -169,7 +176,7 @@ public class Game extends JPanel implements Runnable {
                 delta += (now - lastTime) / frameTime;
                 lastTime = now;
                 if (delta >= 1) {
-                    ball.updateBall(platform1, platform2);
+                    ball.updateBall(this, platform1, platform2);
                     listener.updatePlatforms();
                     repaint();
                     delta--;
