@@ -65,7 +65,6 @@ public class Game extends JPanel implements Runnable {
 
         // UDP/IP Test
         initNetwork();
-
     }
 
     // UDP/IP Test
@@ -74,15 +73,8 @@ public class Game extends JPanel implements Runnable {
         if (JOptionPane.showConfirmDialog(this, "Do you want to play online?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
             if (JOptionPane.showConfirmDialog(this, "Do you want to run the server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
                 String port = JOptionPane.showInputDialog(this, "Please enter the server port(49152 - 65535; default: 50000): ");
-                InetAddress ipOnline = null;
-                try {
-                    ipOnline = InetAddress.getLocalHost();
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
-                assert ipOnline != null;
-                JOptionPane.showMessageDialog(this, "Ip address: " + ipOnline.getHostAddress() + "\nPort: " + port);
                 setupServerAndClient(Integer.parseInt(port));
+                JOptionPane.showMessageDialog(this, "Ip address: " + server.checkIps() + "\nPort: " + port);
                 isOnline = true;
             } else {
                 String port = JOptionPane.showInputDialog(this, "Please enter the server port: ");

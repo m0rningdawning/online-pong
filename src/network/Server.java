@@ -2,8 +2,11 @@ package network;
 
 import core.*;
 
+import javax.swing.*;
 import java.net.*;
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Vector;
 
 public class Server extends Thread{
     private DatagramSocket socket;
@@ -19,6 +22,27 @@ public class Server extends Thread{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String checkIps() {
+        Enumeration<NetworkInterface> interfaces = null;
+        Enumeration<InetAddress> addresses = null;
+        try {
+            interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface ni = interfaces.nextElement();
+                addresses = ni.getInetAddresses();
+                if (addresses.hasMoreElements()) {
+                    InetAddress address = addresses.nextElement();
+                    if (!address.isLinkLocalAddress() && !address.isLoopbackAddress() && address instanceof Inet4Address)
+                        return address.getHostAddress();
+                }
+            }
+        } catch (SocketException e) {
+            System.out.println("Could not get network interfaces.");
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void run(){
