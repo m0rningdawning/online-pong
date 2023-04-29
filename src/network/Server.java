@@ -32,7 +32,7 @@ public class Server extends Thread{
             while (interfaces.hasMoreElements()) {
                 NetworkInterface ni = interfaces.nextElement();
                 addresses = ni.getInetAddresses();
-                if (addresses.hasMoreElements()) {
+                while (addresses.hasMoreElements()) {
                     InetAddress address = addresses.nextElement();
                     if (!address.isLinkLocalAddress() && !address.isLoopbackAddress() && address instanceof Inet4Address)
                         return address.getHostAddress();
