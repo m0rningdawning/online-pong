@@ -25,7 +25,8 @@ public class Game extends JPanel implements Runnable {
     public boolean player2Ready = false;
 
     // Online status
-    static boolean isOnline;
+    public boolean isOnline = false;
+    public boolean isServer = false;
 
     // Background Image with double-buffering
     BufferedImage bufferedImage;
@@ -72,7 +73,7 @@ public class Game extends JPanel implements Runnable {
     public void initNetwork() throws IOException {
         if (JOptionPane.showConfirmDialog(this, "Do you want to play online?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
             if (JOptionPane.showConfirmDialog(this, "Do you want to run the server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
-                String port = JOptionPane.showInputDialog(this, "Please enter the server port(49152 - 65535; default: 50000): ");
+                String port = JOptionPane.showInputDialog(this, "Please enter the server port(49152 - 65535): ");
                 setupServerAndClient(Integer.parseInt(port));
                 JOptionPane.showMessageDialog(this, "Ip address: " + server.checkIps() + "\nPort: " + port);
                 isOnline = true;
@@ -80,6 +81,7 @@ public class Game extends JPanel implements Runnable {
                 String port = JOptionPane.showInputDialog(this, "Please enter the server port: ");
                 String ip = JOptionPane.showInputDialog(this, "Please enter the server IP: ");
                 setupClient(ip, port);
+                isOnline = true;
             }
         } else {
             isOnline = false;
@@ -89,22 +91,46 @@ public class Game extends JPanel implements Runnable {
     public synchronized void setupServerAndClient(int port) throws SocketException, UnknownHostException {
         server = new Server(this, port);
         server.start();
+        isServer = true;
         client = new Client(InetAddress.getLoopbackAddress().getHostName(), port);
         client.start();
+        sendData(0);
     }
 
     public synchronized void setupClient(String ip, String port) throws IOException {
         client = new Client(ip, Integer.parseInt(port));
         client.start();
+        sendData(0);
     }
 
     public void sendData(int type){
         switch (type){
             case 0:
-                client.sendData("p1ready".getBytes());
+                client.sendData("connect".getBytes());
                 break;
             case 1:
+                client.sendData("move1up".getBytes());
+                break;
+            case 2:
+                client.sendData("move1down".getBytes());
+                break;
+            case 3:
+                client.sendData("p1ready".getBytes());
+                break;
+            case 4:
+                client.sendData("move2up".getBytes());
+                break;
+            case 5:
+                client.sendData("move2down".getBytes());
+                break;
+            case 6:
                 client.sendData("p2ready".getBytes());
+                break;
+            case 7:
+                client.sendData("moveball".getBytes());
+                break;
+            case 8:
+                client.sendData("disconnect".getBytes());
                 break;
         }
     }

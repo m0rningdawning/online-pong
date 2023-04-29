@@ -69,21 +69,57 @@ public class InputListener extends KeyAdapter{
     }
 
     public void updatePlatforms() {
-        if (isWPressed && platform1.posY > 0) {
-            platform1.posY -= 10;
-            pong.sendData(0);
+        if (isWPressed) {
+            if (pong.isOnline) {
+                if (pong.isServer && platform1.posY > 0) {
+                    platform1.posY -= 10;
+                    pong.sendData(1);
+                }
+                else if (!pong.isServer && platform2.posY > 0){
+                    platform2.posY -= 10;
+                    pong.sendData(4);
+                }
+            } else if (platform1.posY > 0)
+                platform1.posY -= 10;
         }
-        if (isSPressed && platform1.posY < Game.HEIGHT - platform1.height * 1.4) {
-            platform1.posY += 10;
-            pong.sendData(0);
+        if (isSPressed) {
+            if (pong.isOnline) {
+                if (pong.isServer && platform1.posY < Game.HEIGHT - platform1.height * 1.4){
+                    platform1.posY += 10;
+                    pong.sendData(2);
+                }
+                else if (!pong.isServer && platform2.posY < Game.HEIGHT - platform2.height * 1.4){
+                    platform2.posY += 10;
+                    pong.sendData(5);
+                }
+            } else if (platform1.posY < Game.HEIGHT - platform1.height * 1.4)
+                platform1.posY += 10;
         }
-        if (isUpPressed && platform2.posY > 0) {
-            platform2.posY -= 10;
-            pong.sendData(1);
+        if (isUpPressed) {
+            if (pong.isOnline) {
+                if (pong.isServer && platform1.posY > 0) {
+                    platform1.posY -= 10;
+                    pong.sendData(1);
+                }
+                else if (!pong.isServer && platform2.posY > 0){
+                    platform2.posY -= 10;
+                    pong.sendData(4);
+                }
+            } else if (platform2.posY > 0)
+                platform2.posY -= 10;
         }
-        if (isDownPressed && platform2.posY < Game.HEIGHT - platform2.height * 1.4) {
-            platform2.posY += 10;
-            pong.sendData(1);
+        if (isDownPressed) {
+            if (pong.isOnline) {
+                if (pong.isServer && platform1.posY < Game.HEIGHT - platform1.height * 1.4){
+                    platform1.posY += 10;
+                    pong.sendData(2);
+                }
+                else if (!pong.isServer && platform2.posY < Game.HEIGHT - platform2.height * 1.4){
+                    platform2.posY += 10;
+                    pong.sendData(5);
+                }
+            } else if (platform2.posY < Game.HEIGHT - platform1.height * 1.4)
+                platform2.posY += 10;
         }
     }
 }

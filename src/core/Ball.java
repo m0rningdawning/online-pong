@@ -7,9 +7,10 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Ball{
-    static final int width = 20, height = 20, startingSpeed = 6;
+    static final int width = 20, height = 20, startingSpeed = 8;
     double posX, posY, currentSpeed = startingSpeed;
     double dirX, dirY;
+    double dirLength;
 
     Ball(){
         setPos();
@@ -33,11 +34,16 @@ public class Ball{
     }
 
     public void updateBall(Game pong, Platform platform1, Platform platform2){
+        dirLength = Math.sqrt(dirX * dirX + dirY * dirY);
+
+        posX += currentSpeed * (dirX / dirLength);
+        posY += currentSpeed * (dirY / dirLength);
+
         //posX += currentSpeed * dirX;
         //posY += currentSpeed * dirY;
 
-        posX += Math.max(-currentSpeed, Math.min(currentSpeed, currentSpeed * dirX));
-        posY += Math.max(-currentSpeed, Math.min(currentSpeed, currentSpeed * dirY));
+        //posX += Math.max(-currentSpeed, Math.min(currentSpeed, currentSpeed * dirX));
+        //posY += Math.max(-currentSpeed, Math.min(currentSpeed, currentSpeed * dirY));
 
         // Collision detection of the ball with the horizontal sides of the screen
         if (posY < 0 || posY > Game.HEIGHT - height * 3) {
