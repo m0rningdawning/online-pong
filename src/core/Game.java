@@ -73,10 +73,17 @@ public class Game extends JPanel implements Runnable {
     public void initNetwork() throws IOException {
         if (JOptionPane.showConfirmDialog(this, "Do you want to play online?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
             if (JOptionPane.showConfirmDialog(this, "Do you want to run the server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
-                String port = JOptionPane.showInputDialog(this, "Please enter the server port(49152 - 65535): ");
-                setupServerAndClient(Integer.parseInt(port));
-                JOptionPane.showMessageDialog(this, "Ip address: " + server.checkIps() + "\nPort: " + port);
-                isOnline = true;
+                if (JOptionPane.showConfirmDialog(this, "Do you want to run a public server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
+                    String port = JOptionPane.showInputDialog(this, "Please enter the server port(49152 - 65535): ");
+                    setupServerAndClient(Integer.parseInt(port), true);
+                    JOptionPane.showMessageDialog(this, "Ip address(public): " + server.checkPubIp() + "\nPort: " + port);
+                    isOnline = true;
+                } else {
+                    String port = JOptionPane.showInputDialog(this, "Please enter the server port(49152 - 65535): ");
+                    setupServerAndClient(Integer.parseInt(port), false);
+                    JOptionPane.showMessageDialog(this, "Ip address(private): " + server.checkIps() + "\nPort: " + port);
+                    isOnline = true;
+                }
             } else {
                 String port = JOptionPane.showInputDialog(this, "Please enter the server port: ");
                 String ip = JOptionPane.showInputDialog(this, "Please enter the server IP: ");
@@ -88,8 +95,8 @@ public class Game extends JPanel implements Runnable {
         }
     }
 
-    public synchronized void setupServerAndClient(int port) throws SocketException, UnknownHostException {
-        server = new Server(this, port);
+    public synchronized void setupServerAndClient(int port, boolean global) throws IOException {
+        server = new Server(this, port, global);
         server.start();
         isServer = true;
         client = new Client(InetAddress.getLoopbackAddress().getHostName(), port);

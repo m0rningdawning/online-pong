@@ -3,6 +3,8 @@ package network;
 import core.*;
 
 import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.*;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -16,13 +18,14 @@ public class Server extends Thread{
     Game pong;
     private byte[] buf;
 
-    public Server(Game pong, int port) throws SocketException, UnknownHostException {
+    public Server(Game pong, int port, boolean global) throws IOException {
         this.pong = pong;
-        try {
-            this.socket = new DatagramSocket(port);
+        if (global) {
             this.port = port;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            this.socket = new DatagramSocket(port, InetAddress.getByName(checkPubIp()));
+        } else {
+            this.port = port;
+            this.socket = new DatagramSocket(port);
         }
     }
 
@@ -45,6 +48,13 @@ public class Server extends Thread{
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String checkPubIp() throws IOException {
+        URL url = new URL("http://checkip.amazonaws.com");
+        URLConnection conn = url.openConnection();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        return reader.readLine().trim();
     }
 
     public void handlePacket(String received, InetAddress address, int port) throws UnknownHostException {
