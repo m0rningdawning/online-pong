@@ -34,10 +34,10 @@ public class Game extends JPanel implements Runnable {
 
     // Objects
     Graphics gfx;
-    Platform platform1;
-    Platform platform2;
-    Ball ball;
-    InputListener listener;
+    public Platform platform1;
+    public Platform platform2;
+    public Ball ball;
+    public InputListener listener;
 
     // Thread
     Thread thread;
@@ -99,13 +99,13 @@ public class Game extends JPanel implements Runnable {
         server = new Server(this, port, global);
         server.start();
         isServer = true;
-        client = new Client(InetAddress.getLoopbackAddress().getHostName(), port);
+        client = new Client(InetAddress.getLoopbackAddress().getHostName(), port, this);
         client.start();
         sendData(0);
     }
 
     public synchronized void setupClient(String ip, String port) throws IOException {
-        client = new Client(ip, Integer.parseInt(port));
+        client = new Client(ip, Integer.parseInt(port), this);
         client.start();
         sendData(0);
     }
@@ -141,6 +141,10 @@ public class Game extends JPanel implements Runnable {
                 break;
         }
     }
+
+    public void sendBallData(double posX, double posY){
+        client.sendData(("ball:" + posX + ":" + posY).getBytes());
+    }
     /*
     public void dropServer() throws IOException {
         client.close();
@@ -155,7 +159,7 @@ public class Game extends JPanel implements Runnable {
     }
 
     public void newBall(){
-        ball = new Ball();
+        ball = new Ball(this);
     }
 
     public void newPlatforms(){

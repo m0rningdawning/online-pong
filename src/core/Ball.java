@@ -8,11 +8,13 @@ import javax.swing.*;
 
 public class Ball{
     static final int width = 20, height = 20, startingSpeed = 8;
-    double posX, posY, currentSpeed = startingSpeed;
-    double dirX, dirY;
+    public double posX, posY;
+    double dirX, dirY, currentSpeed = startingSpeed;
     double dirLength;
+    Game pong;
 
-    Ball(){
+    Ball(Game pong){
+        this.pong = pong;
         setPos();
         initializeDirection();
     }
@@ -36,8 +38,18 @@ public class Ball{
     public void updateBall(Game pong, Platform platform1, Platform platform2){
         dirLength = Math.sqrt(dirX * dirX + dirY * dirY);
 
-        posX += currentSpeed * (dirX / dirLength);
-        posY += currentSpeed * (dirY / dirLength);
+        if (pong.isOnline){
+            if (pong.isServer){
+                posX += currentSpeed * (dirX / dirLength);
+                posY += currentSpeed * (dirY / dirLength);
+                pong.sendBallData(posX, posY);
+            }
+        }
+        else{
+            posX += currentSpeed * (dirX / dirLength);
+            posY += currentSpeed * (dirY / dirLength);
+        }
+
 
         //posX += currentSpeed * dirX;
         //posY += currentSpeed * dirY;

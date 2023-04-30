@@ -26,17 +26,23 @@ public class InputListener extends KeyAdapter{
     public void keyPressed(KeyEvent e){
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_ESCAPE){
+            if (pong.isOnline)
+                pong.sendData(8);
             System.exit(0);
-            /*
-            try {
-                pong.dropServer();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            */
         }
         if (key == KeyEvent.VK_SPACE) {
-            pong.player1Ready = pong.player2Ready = true;
+            if (pong.isOnline) {
+                if (pong.isServer) {
+                    pong.player1Ready = true;
+                    pong.sendData(3);
+                }
+                else {
+                    pong.player2Ready = true;
+                    pong.sendData(6);
+                }
+            }
+            else
+                pong.player1Ready = pong.player2Ready = true;
         }
         if (key == KeyEvent.VK_W){
             isWPressed = true;

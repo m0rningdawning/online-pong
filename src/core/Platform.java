@@ -6,8 +6,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class Platform{
-    double posX, posY;
-    double sPosX;
+    public double posX, posY;
+    public double sPosX;
     static final int width = 20, height = 100;
     int score = 0;
 
