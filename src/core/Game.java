@@ -111,45 +111,22 @@ public class Game extends JPanel implements Runnable {
     }
 
     public void sendData(int type){
-        switch (type){
-            case 0:
-                client.sendData("connect".getBytes());
-                break;
-            case 1:
-                client.sendData("move1up".getBytes());
-                break;
-            case 2:
-                client.sendData("move1down".getBytes());
-                break;
-            case 3:
-                client.sendData("p1ready".getBytes());
-                break;
-            case 4:
-                client.sendData("move2up".getBytes());
-                break;
-            case 5:
-                client.sendData("move2down".getBytes());
-                break;
-            case 6:
-                client.sendData("p2ready".getBytes());
-                break;
-            case 7:
-                client.sendData("moveball".getBytes());
-                break;
-            case 8:
-                client.sendData("disconnect".getBytes());
-                break;
+        switch (type) {
+            case 0 -> client.sendData("connect".getBytes());
+            case 1 -> client.sendData("move1up".getBytes());
+            case 2 -> client.sendData("move1down".getBytes());
+            case 3 -> client.sendData("p1ready".getBytes());
+            case 4 -> client.sendData("move2up".getBytes());
+            case 5 -> client.sendData("move2down".getBytes());
+            case 6 -> client.sendData("p2ready".getBytes());
+            case 7 -> client.sendData("disconnect".getBytes());
         }
     }
 
     public void sendBallData(double posX, double posY){
         client.sendData(("ball:" + posX + ":" + posY).getBytes());
     }
-    /*
-    public void dropServer() throws IOException {
-        client.close();
-    }
-    */
+
     public void startThread(){
         thread.start();
     }
@@ -215,7 +192,7 @@ public class Game extends JPanel implements Runnable {
     }
 
     public static void main(String args[]) throws IOException {
-        Game pong = new Game();
+        new Game();
     }
 }
 

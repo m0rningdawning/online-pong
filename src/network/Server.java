@@ -14,7 +14,7 @@ public class Server extends Thread{
     private final int MAX_PLAYERS = 2;
     private DatagramSocket socket;
     public int port;
-    public volatile int connectedPlayers = 0;
+    public int connectedPlayers = 0;
     private String[] playerAddresses = new String[MAX_PLAYERS];
     private String[] receivedTmp = new String[1];
     Game pong;
@@ -53,16 +53,17 @@ public class Server extends Thread{
     }
 
     public String checkPubIp() throws IOException {
-        URL url = new URL("http://checkip.amazonaws.com");
-        URLConnection conn = url.openConnection();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        return reader.readLine().trim();
+        URL whatismyip = new URL("http://checkip.amazonaws.com");
+        BufferedReader in = new BufferedReader(new InputStreamReader(
+                whatismyip.openStream()));
+        return in.readLine().trim();
     }
 
     public void handlePacket(String received, InetAddress address, int port) throws UnknownHostException {
         if (received.trim().equals("connect")){
             if (connectedPlayers < MAX_PLAYERS){
                 connectedPlayers++;
+                pong.platform1.score = pong.platform2.score = 0;
                 playerAddresses[connectedPlayers - 1] = address.getHostAddress() + ":" + port;
                 System.out.println("Player " + connectedPlayers + " connected.");
                 sendData(("connected").getBytes(), address, port);
@@ -85,11 +86,24 @@ public class Server extends Thread{
                 case "move1down" -> sendData("move1down".getBytes(), InetAddress.getByName(playerAddresses[1].split(":")[0]), Integer.parseInt(playerAddresses[1].split(":")[1]));
                 case "move2up" -> sendData("move2up".getBytes(), InetAddress.getByName(playerAddresses[0].split(":")[0]), Integer.parseInt(playerAddresses[0].split(":")[1]));
                 case "move2down" -> sendData("move2down".getBytes(), InetAddress.getByName(playerAddresses[0].split(":")[0]), Integer.parseInt(playerAddresses[0].split(":")[1]));
-                case "p1ready" -> sendData("p1ready".getBytes(), InetAddress.getByName(playerAddresses[1].split(":")[0]), Integer.parseInt(playerAddresses[1].split(":")[1]));
-                case "p2ready" -> sendData("p2ready".getBytes(), InetAddress.getByName(playerAddresses[0].split(":")[0]), Integer.parseInt(playerAddresses[0].split(":")[1]));
+                case "p1ready" -> {
+                    if (playerAddresses[1] != null)
+                        sendData("p1ready".getBytes(), InetAddress.getByName(playerAddresses[1].split(":")[0]), Integer.parseInt(playerAddresses[1].split(":")[1]));
+                }
+                case "p2ready" -> {
+                    if (playerAddresses[0] != null)
+                        sendData("p2ready".getBytes(), InetAddress.getByName(playerAddresses[0].split(":")[0]), Integer.parseInt(playerAddresses[0].split(":")[1]));
+                }
                 case "disconnect" -> {
-                    playerAddresses[1] = null;
-                    System.out.println("Player 2 disconnected.");
+                    if (address.getHostAddress().equals(playerAddresses[0].split(":")[0])){
+                        playerAddresses[0] = null;
+                        if (playerAddresses[1] != null)
+                            sendData("disconnect1".getBytes(), InetAddress.getByName(playerAddresses[1].split(":")[0]), Integer.parseInt(playerAddresses[1].split(":")[1]));
+                    }
+                    else {
+                        playerAddresses[1] = null;
+                        sendData("disconnect2".getBytes(), InetAddress.getByName(playerAddresses[0].split(":")[0]), Integer.parseInt(playerAddresses[0].split(":")[1]));
+                    }
                     connectedPlayers--;
                 }
             }
@@ -114,7 +128,6 @@ public class Server extends Thread{
             } catch (UnknownHostException e) {
                 throw new RuntimeException(e);
             }
-
         }
     }
 

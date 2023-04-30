@@ -27,7 +27,7 @@ public class InputListener extends KeyAdapter{
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_ESCAPE){
             if (pong.isOnline)
-                pong.sendData(8);
+                pong.sendData(7);
             System.exit(0);
         }
         if (key == KeyEvent.VK_SPACE) {

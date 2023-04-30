@@ -66,6 +66,8 @@ public class Client extends Thread{
                 case "move2down" -> pong.platform2.posY += 10;
                 case "p1ready" -> pong.player1Ready = true;
                 case "p2ready" -> pong.player2Ready = true;
+                case "disconnect1" -> System.out.println("Player 1 disconnected, the server is shutting down.");
+                case "disconnect2" -> System.out.println("Player 2 disconnected.");
             }
         }
         receivedTmp[0] = received.trim();

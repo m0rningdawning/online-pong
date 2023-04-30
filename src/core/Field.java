@@ -1,10 +1,12 @@
 package core;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Field extends JFrame{
     Field(Game pong){
         JFrame frame = new JFrame("Pong");
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage("textures/icon2.png"));
         frame.getContentPane().add(pong);
         //frame.setBackground(new Color(27,119,90));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

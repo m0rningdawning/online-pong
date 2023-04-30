@@ -9,7 +9,7 @@ public class Platform{
     public double posX, posY;
     public double sPosX;
     static final int width = 20, height = 100;
-    int score = 0;
+    public int score = 0;
 
     public Platform(boolean playerA){
         setPos(playerA);
@@ -36,14 +36,14 @@ public class Platform{
             posX = 0;
         else
             posX = Game.WIDTH - (int)(width * 1.5);
-        posY = Game.HEIGHT/2 - height/2;
+        posY = (double) Game.HEIGHT /2 - (double) height /2;
     }
 
     public void setScorePos(Graphics g, boolean playerA, Font font) {
         int strWidth = g.getFontMetrics(font).stringWidth(Integer.toString(score));
         if(playerA)
-            sPosX = Game.WIDTH/2 - strWidth * 2 - Game.HEIGHT/8;
+            sPosX = (double) Game.WIDTH /2 - strWidth * 2 - (double) Game.HEIGHT /8;
         else
-            sPosX = Game.WIDTH/2 + Game.HEIGHT/8;
+            sPosX = (double) Game.WIDTH /2 + (double) Game.HEIGHT /8;
     }
 }
