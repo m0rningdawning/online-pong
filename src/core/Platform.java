@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Platform{
     public double posX, posY;
     public double sPosX;
-    static final int width = 20, height = 100;
+    public final int width = 20, height = 100;
     public int score = 0;
 
     public Platform(boolean playerA){

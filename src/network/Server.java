@@ -18,7 +18,7 @@ public class Server extends Thread{
     private String[] playerAddresses = new String[MAX_PLAYERS];
     private String[] receivedTmp = new String[1];
     Game pong;
-    private byte[] buf;
+    byte[] buf;
 
     public Server(Game pong, int port, boolean global) throws IOException {
         this.pong = pong;
@@ -32,8 +32,8 @@ public class Server extends Thread{
     }
 
     public String checkIps() {
-        Enumeration<NetworkInterface> interfaces = null;
-        Enumeration<InetAddress> addresses = null;
+        Enumeration<NetworkInterface> interfaces;
+        Enumeration<InetAddress> addresses;
         try {
             interfaces = NetworkInterface.getNetworkInterfaces();
             while (interfaces.hasMoreElements()) {

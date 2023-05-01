@@ -77,7 +77,7 @@ public class Ball{
         }
 
         // Score registration
-        if (posX < platform1.width - width / 2) {
+        if (posX < platform1.width - (double) width / 2) {
             resetBall(0.5 + (Math.random() * 0.5));
             platform1.setPos(true);
             platform2.setPos(false);
@@ -111,7 +111,7 @@ public class Ball{
     }
 
     public void setPos(){
-        posX = Game.WIDTH/2 - width;
-        posY = Game.HEIGHT/2 - height;
+        posX = (double) Game.WIDTH /2 - width;
+        posY = (double) Game.HEIGHT /2 - height;
     }
 }

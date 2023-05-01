@@ -16,7 +16,7 @@ public class Client extends Thread{
     private String[] receivedTmp = new String[1];
     private byte[] buf;
 
-    public Client(String ip, int port, Game pong) throws SocketException, UnknownHostException {
+    public Client(String ip, int port, Game pong){
         this.pong = pong;
         try {
             this.socket = new DatagramSocket();

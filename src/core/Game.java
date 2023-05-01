@@ -56,8 +56,8 @@ public class Game extends JPanel implements Runnable {
         backgroundImage = ImageIO.read(new File("textures/background.png"));
 
         // Input listener
-        listener = new InputListener();
-        listener.InputListener(platform1, platform2, this);
+        listener = new InputListener(platform1, platform2, this);
+        //listener.InputListener();
         this.addKeyListener(listener);
 
         // Thread
@@ -191,7 +191,7 @@ public class Game extends JPanel implements Runnable {
         }
     }
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         new Game();
     }
 }

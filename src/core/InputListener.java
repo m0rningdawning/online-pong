@@ -16,7 +16,7 @@ public class InputListener extends KeyAdapter{
     static boolean isDownPressed = false;
 
 
-    public void InputListener(Platform platform1, Platform platform2, Game pong) throws SocketException, UnknownHostException {
+    public InputListener(Platform platform1, Platform platform2, Game pong) {
         this.platform1 = platform1;
         this.platform2 = platform2;
         this.pong = pong;
