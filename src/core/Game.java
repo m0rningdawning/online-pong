@@ -64,11 +64,9 @@ public class Game extends JPanel implements Runnable {
         thread = new Thread(this);
         startThread();
 
-        // UDP/IP Test
+        // Network Initialization
         initNetwork();
     }
-
-    // UDP/IP Test
 
     public void initNetwork() throws IOException {
         if (JOptionPane.showConfirmDialog(this, "Do you want to play online?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {

@@ -50,13 +50,6 @@ public class Ball{
             posY += currentSpeed * (dirY / dirLength);
         }
 
-
-        //posX += currentSpeed * dirX;
-        //posY += currentSpeed * dirY;
-
-        //posX += Math.max(-currentSpeed, Math.min(currentSpeed, currentSpeed * dirX));
-        //posY += Math.max(-currentSpeed, Math.min(currentSpeed, currentSpeed * dirY));
-
         // Collision detection of the ball with the horizontal sides of the screen
         if (posY < 0 || posY > Game.HEIGHT - height * 3) {
             dirY = -dirY;
