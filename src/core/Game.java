@@ -21,7 +21,7 @@ public class Game extends JPanel implements Runnable {
     static boolean playStatus = true;
 
     // Round count
-    static int roundCount = 0;
+    public int roundCount = 0;
 
     // Player readiness
     public boolean player1Ready = false;
@@ -128,9 +128,9 @@ public class Game extends JPanel implements Runnable {
         client.sendData(("ball:" + posX + ":" + posY).getBytes());
     }
 
-    public void handleStats(){
-        Stats stats = new Stats(this);
-
+    public void handleStats(int [] playerScores){
+        Stats stats = new Stats(this, /*server.playerAddresses,*/ playerScores, roundCount, server.port);
+        stats.handleStats();
     }
 
     public void startThread(){

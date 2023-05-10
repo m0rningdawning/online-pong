@@ -15,7 +15,7 @@ public class Server extends Thread{
     private DatagramSocket socket;
     public int port;
     public int connectedPlayers = 0;
-    private String[] playerAddresses = new String[MAX_PLAYERS];
+    public String[] playerAddresses = new String[MAX_PLAYERS];
     private String[] receivedTmp = new String[1];
     Game pong;
     byte[] buf;

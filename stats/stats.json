@@ -1,0 +1,6 @@
+{
+"game": {"isOnline": "true" },
+"scores": {"score1": "0", "score2": 0},
+"round": {"round": "0" }
+"port": {"port": "50000" },
+},

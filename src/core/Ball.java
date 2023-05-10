@@ -36,15 +36,17 @@ public class Ball{
     }
 
     public void endRound(boolean playerAWon){
+        pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score});
         setPos();
         initializeDirection();
         currentSpeed = startingSpeed;
         pong.platform1.score = pong.platform2.score = 0;
+        pong.roundCount++;
         // Call end menu
     }
 
-    public void endOnlineRound(boolean playerAWon){
-        pong.handleStats();
+    public void endOnlineRound(boolean playerAWon, boolean initial){
+        pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score});
 
         //if (playerAWon)
         // Send reset packet to server
@@ -99,7 +101,7 @@ public class Ball{
             pong.platform2.setPos(false);
             if (pong.platform2.score == Platform.maxScore - 1)
                 if (pong.isOnline)
-                    endOnlineRound(false);
+                    endOnlineRound(false, true);
                 else
                     endRound(false);
             else
@@ -113,7 +115,7 @@ public class Ball{
             pong.platform2.setPos(false);
             if (pong.platform1.score == Platform.maxScore - 1)
                 if (pong.isOnline)
-                    endOnlineRound(true);
+                    endOnlineRound(true, true);
                 else
                     endRound(true);
             else
