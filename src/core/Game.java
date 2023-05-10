@@ -1,8 +1,8 @@
 package core;
 
+import data.Stats;
 import network.*;
 import java.awt.image.BufferedImage;
-import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -19,6 +19,9 @@ public class Game extends JPanel implements Runnable {
 
     // Game state
     static boolean playStatus = true;
+
+    // Round count
+    static int roundCount = 0;
 
     // Player readiness
     public boolean player1Ready = false;
@@ -125,6 +128,11 @@ public class Game extends JPanel implements Runnable {
         client.sendData(("ball:" + posX + ":" + posY).getBytes());
     }
 
+    public void handleStats(){
+        Stats stats = new Stats(this);
+
+    }
+
     public void startThread(){
         thread.start();
     }
@@ -180,7 +188,7 @@ public class Game extends JPanel implements Runnable {
                 delta += (now - lastTime) / frameTime;
                 lastTime = now;
                 if (delta >= 1) {
-                    ball.updateBall(this, platform1, platform2);
+                    ball.updateBall(this);
                     listener.updatePlatforms();
                     repaint();
                     delta--;

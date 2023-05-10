@@ -9,7 +9,9 @@ public class Platform{
     public double posX, posY;
     public double sPosX;
     public final int width = 20, height = 100;
+    public static final int maxScore = 3;
     public int score = 0;
+
 
     public Platform(boolean playerA){
         setPos(playerA);

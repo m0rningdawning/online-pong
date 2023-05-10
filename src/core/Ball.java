@@ -1,10 +1,9 @@
 package core;
 
+import data.Stats;
+
 import java.util.*;
 import java.awt.*;
-import java.lang.Thread;
-import java.awt.event.*;
-import javax.swing.*;
 
 public class Ball{
     static final int width = 20, height = 20, startingSpeed = 8;
@@ -12,6 +11,7 @@ public class Ball{
     double dirX, dirY, currentSpeed = startingSpeed;
     double dirLength;
     Game pong;
+    Stats stats;
 
     Ball(Game pong){
         this.pong = pong;
@@ -35,7 +35,30 @@ public class Ball{
             dirX = -1.0 + (Math.random() * 0.5);
     }
 
-    public void updateBall(Game pong, Platform platform1, Platform platform2){
+    public void endRound(boolean playerAWon){
+        setPos();
+        initializeDirection();
+        currentSpeed = startingSpeed;
+        pong.platform1.score = pong.platform2.score = 0;
+        // Call end menu
+    }
+
+    public void endOnlineRound(boolean playerAWon){
+        pong.handleStats();
+
+        //if (playerAWon)
+        // Send reset packet to server
+        //else
+        // Send reset packet to server
+
+        // Call end menu
+        setPos();
+        initializeDirection();
+        currentSpeed = startingSpeed;
+        pong.platform1.score = pong.platform2.score = 0;
+    }
+
+    public void updateBall(Game pong){
         dirLength = Math.sqrt(dirX * dirX + dirY * dirY);
 
         if (pong.isOnline){
@@ -58,31 +81,43 @@ public class Ball{
         // Collision detection of the ball with platforms
 
         // Platform one
-        if (posX < platform1.posX + platform1.width && posY + height > platform1.posY && posY < platform1.posY + platform1.height) {
+        if (posX < pong.platform1.posX + pong.platform1.width && posY + height > pong.platform1.posY && posY < pong.platform1.posY + pong.platform1.height) {
             currentSpeed += 0.2;
             setDir(true);
         }
 
         // Platform two
-        if (posX + width > platform2.posX && posY + height > platform2.posY && posY < platform2.posY + platform2.height) {
+        if (posX + width > pong.platform2.posX && posY + height > pong.platform2.posY && posY < pong.platform2.posY + pong.platform2.height) {
             currentSpeed += 0.2;
             setDir(false);
         }
 
         // Score registration
-        if (posX < platform1.width - (double) width / 2) {
+        if (posX < pong.platform1.width - (double) width / 2) {
             resetBall(0.5 + (Math.random() * 0.5));
-            platform1.setPos(true);
-            platform2.setPos(false);
-            platform2.score++;
+            pong.platform1.setPos(true);
+            pong.platform2.setPos(false);
+            if (pong.platform2.score == Platform.maxScore - 1)
+                if (pong.isOnline)
+                    endOnlineRound(false);
+                else
+                    endRound(false);
+            else
+                pong.platform2.score++;
             pong.player1Ready = pong.player2Ready = false;
         }
 
         if (posX > Game.WIDTH - width * 2) {
             resetBall(-1.0 + (Math.random() * 0.5));
-            platform1.setPos(true);
-            platform2.setPos(false);
-            platform1.score++;
+            pong.platform1.setPos(true);
+            pong.platform2.setPos(false);
+            if (pong.platform1.score == Platform.maxScore - 1)
+                if (pong.isOnline)
+                    endOnlineRound(true);
+                else
+                    endRound(true);
+            else
+                pong.platform1.score++;
             pong.player1Ready = pong.player2Ready = false;
         }
     }
