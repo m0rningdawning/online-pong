@@ -37,7 +37,7 @@ public class Ball{
     }
 
     public void endRound(boolean playerAWon) throws IOException {
-        pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, false, false);
+        pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, false);
         setPos();
         initializeDirection();
         currentSpeed = startingSpeed;
@@ -47,7 +47,7 @@ public class Ball{
     }
 
     public void endOnlineRound(boolean playerAWon, boolean initial) throws IOException {
-        pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, false, false);
+        pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, false);
 
         //if (playerAWon)
         // Send reset packet to server

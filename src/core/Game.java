@@ -9,6 +9,8 @@ import javax.swing.*;
 import javax.imageio.*;
 import java.io.*;
 import java.net.*;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Game extends JPanel implements Runnable {
 
@@ -128,7 +130,7 @@ public class Game extends JPanel implements Runnable {
         client.sendData(("ball:" + posX + ":" + posY).getBytes());
     }
 
-    public void handleStats(int [] playerScores, boolean eof, boolean clear) throws IOException {
+    public void handleStats(int [] playerScores, boolean eof) throws IOException {
         if(isOnline){
             Stats stats = new Stats(this, /*server.playerAddresses,*/ playerScores, roundCount, client.port);
             stats.handleOnlineStats();
@@ -139,11 +141,13 @@ public class Game extends JPanel implements Runnable {
             if (eof) {
                 stats.prepareStats(true, false);
             }
-            //stats.prepareStats(true, false);
-            if (clear) {
-                stats.prepareStats(false, true);
-            }
         }
+    }
+
+    public void clearStats() throws IOException {
+        FileWriter writer = new FileWriter("stats/offlineStats.json", false);
+        writer.write("");
+        writer.close();
     }
 
     public void startThread(){
@@ -215,7 +219,8 @@ public class Game extends JPanel implements Runnable {
     }
 
     public static void main(String[] args) throws IOException {
-        new Game();
+        Game pong = new Game();
+        pong.clearStats();
     }
 }
 

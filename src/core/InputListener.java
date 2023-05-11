@@ -29,7 +29,7 @@ public class InputListener extends KeyAdapter{
             if (pong.isOnline)
                 pong.sendData(7);
             try {
-                pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, true, false);
+                pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, true);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
