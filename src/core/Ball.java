@@ -2,6 +2,7 @@ package core;
 
 import data.Stats;
 
+import java.io.IOException;
 import java.util.*;
 import java.awt.*;
 
@@ -35,8 +36,8 @@ public class Ball{
             dirX = -1.0 + (Math.random() * 0.5);
     }
 
-    public void endRound(boolean playerAWon){
-        pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score});
+    public void endRound(boolean playerAWon) throws IOException {
+        pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, false, false);
         setPos();
         initializeDirection();
         currentSpeed = startingSpeed;
@@ -45,8 +46,8 @@ public class Ball{
         // Call end menu
     }
 
-    public void endOnlineRound(boolean playerAWon, boolean initial){
-        pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score});
+    public void endOnlineRound(boolean playerAWon, boolean initial) throws IOException {
+        pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, false, false);
 
         //if (playerAWon)
         // Send reset packet to server
@@ -60,7 +61,7 @@ public class Ball{
         pong.platform1.score = pong.platform2.score = 0;
     }
 
-    public void updateBall(Game pong){
+    public void updateBall(Game pong) throws IOException {
         dirLength = Math.sqrt(dirX * dirX + dirY * dirY);
 
         if (pong.isOnline){
@@ -99,13 +100,12 @@ public class Ball{
             resetBall(0.5 + (Math.random() * 0.5));
             pong.platform1.setPos(true);
             pong.platform2.setPos(false);
-            if (pong.platform2.score == Platform.maxScore - 1)
+            pong.platform2.score++;
+            if (pong.platform2.score == Platform.maxScore)
                 if (pong.isOnline)
                     endOnlineRound(false, true);
                 else
                     endRound(false);
-            else
-                pong.platform2.score++;
             pong.player1Ready = pong.player2Ready = false;
         }
 
@@ -113,13 +113,12 @@ public class Ball{
             resetBall(-1.0 + (Math.random() * 0.5));
             pong.platform1.setPos(true);
             pong.platform2.setPos(false);
-            if (pong.platform1.score == Platform.maxScore - 1)
+            pong.platform1.score++;
+            if (pong.platform1.score == Platform.maxScore)
                 if (pong.isOnline)
                     endOnlineRound(true, true);
                 else
                     endRound(true);
-            else
-                pong.platform1.score++;
             pong.player1Ready = pong.player2Ready = false;
         }
     }
