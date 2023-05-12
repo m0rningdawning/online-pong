@@ -39,6 +39,7 @@ public class Game extends JPanel implements Runnable {
 
     // Objects
     Graphics gfx;
+    public Stats stats;
     public Platform platform1;
     public Platform platform2;
     public Ball ball;
@@ -75,7 +76,7 @@ public class Game extends JPanel implements Runnable {
 
     public void initNetwork() throws IOException {
         if (JOptionPane.showConfirmDialog(this, "Do you want to play online?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
-            clearStats(false);
+            clearStats(true);
             if (JOptionPane.showConfirmDialog(this, "Do you want to run the server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
                 if (JOptionPane.showConfirmDialog(this, "Do you want to run a public server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
                     String port = JOptionPane.showInputDialog(this, "Please enter the server port(49152 - 65535): ");
@@ -136,18 +137,18 @@ public class Game extends JPanel implements Runnable {
 
     public void handleStats(int [] playerScores, boolean eof) throws IOException {
         if(isOnline){
-            Stats stats = new Stats(this, null, playerScores, roundCount, client.port);
-            stats.prepareStats(false, false);
+            stats = new Stats(this, null, playerScores, roundCount, client.port);
+            stats.prepareStats(false);
             stats.handleOnlineStats();
             if (eof) {
-                stats.prepareStats(true, false);
+                stats.prepareStats(true);
             }
         } else {
-            Stats stats = new Stats(this, null, playerScores, roundCount, -1);
-            stats.prepareStats(false, false);
+            stats = new Stats(this, null, playerScores, roundCount, -1);
+            stats.prepareStats(false);
             stats.handleStats();
             if (eof) {
-                stats.prepareStats(true, false);
+                stats.prepareStats(true);
             }
         }
     }
@@ -155,9 +156,9 @@ public class Game extends JPanel implements Runnable {
     public void clearStats(boolean isOnline) throws IOException {
         FileWriter writer;
         if (isOnline)
-            writer = new FileWriter("stats/offlineStats.json", false);
-        else
             writer = new FileWriter("stats/onlineStats.json", false);
+        else
+            writer = new FileWriter("stats/offlineStats.json", false);
         writer.write("");
         writer.close();
     }

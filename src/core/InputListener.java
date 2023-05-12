@@ -28,11 +28,7 @@ public class InputListener extends KeyAdapter{
         if (key == KeyEvent.VK_ESCAPE){
             if (pong.isOnline)
                 pong.sendData(7);
-            try {
-                pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, true);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            pong.stats.prepareStats(true);
             System.exit(0);
         }
         if (key == KeyEvent.VK_SPACE) {

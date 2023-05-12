@@ -27,22 +27,17 @@ public class Stats {
         this.port = port;
     }
 
-    public void prepareStats(boolean eof, boolean clear) {
+    public void prepareStats(boolean eof) {
         if (pong.isOnline){
             try (FileWriter writer = new FileWriter("stats/onlineStats.json", true)){
-                if (file.length() == 0) {
+                if (onlineFile.length() == 0) {
                     writer.write("[\n");
                 }
-                if (file.length() != 0 && !eof) {
+                if (onlineFile.length() != 0 && !eof) {
                     writer.write(",\n");
                 }
                 if (eof) {
                     writer.write("\n]");
-                }
-                if (clear) {
-                    FileWriter writer1 = new FileWriter("stats/onlineStats.json", false);
-                    writer1.write("");
-                    writer1.close();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -57,11 +52,6 @@ public class Stats {
                 }
                 if (eof) {
                     writer.write("\n]");
-                }
-                if (clear) {
-                    FileWriter writer1 = new FileWriter("stats/offlineStats.json", false);
-                    writer1.write("");
-                    writer1.close();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -96,10 +86,10 @@ public class Stats {
         try (FileWriter writer = new FileWriter("stats/onlineStats.json", true)) {
             writer.write("\t{\n");
             writer.write("\t\t\"game\": " + gameJson + ",\n");
-            writer.write("\t\t\"playerAddresses\": " + playerAddrJson + "\n");
+            writer.write("\t\t\"playerAddresses\": " + playerAddrJson + ",\n");
             writer.write("\t\t\"scores\": " + scoresJson + ",\n");
             writer.write("\t\t\"round\": " + roundJson + ",\n");
-            writer.write("\t\t\"port\": " + portJson + ",\n");
+            writer.write("\t\t\"port\": " + portJson + "\n");
             writer.write("\t}");
         } catch (IOException e) {
             throw new RuntimeException(e);
