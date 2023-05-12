@@ -1,0 +1,20 @@
+{
+"game": {"isOnline": "true" },
+"scores": {"score1": "1", "score2": "0" },
+"round": {"round": "1" },
+"port": {"port": "50000" },
+{
+"game": {"isOnline": "true" },
+"scores": {"score1": "1", "score2": "0" },
+"round": {"round": "1" },
+"port": {"port": "50000" },
+{
+"game": {"isOnline": "true" },
+"scores": {"score1": "0", "score2": "0" },
+"round": {"round": "1" },
+"port": {"port": "50000" },
+{
+"game": {"isOnline": "true" },
+"scores": {"score1": "0", "score2": "0" },
+"round": {"round": "1" },
+"port": {"port": "50000" },

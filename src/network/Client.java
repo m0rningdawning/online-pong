@@ -39,7 +39,7 @@ public class Client extends Thread{
             String received = new String(packet.getData(), 0, packet.getLength());
             try {
                 handlePacket(received, packet.getAddress(), packet.getPort());
-            } catch (UnknownHostException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -54,7 +54,7 @@ public class Client extends Thread{
         }
     }
 
-    public void handlePacket(String received, InetAddress address, int port) throws UnknownHostException {
+    public void handlePacket(String received, InetAddress address, int port) throws IOException {
         if (received.trim().equals("connected")){
             serverAddress = address.getHostAddress();
         }
@@ -68,6 +68,8 @@ public class Client extends Thread{
                 case "p2ready" -> pong.player2Ready = true;
                 case "disconnect1" -> System.out.println("Player 1 disconnected, the server is shutting down.");
                 case "disconnect2" -> System.out.println("Player 2 disconnected.");
+                case "1wonround" -> pong.ball.endOnlineRound(true, false);
+                case "2wonround" -> pong.ball.endOnlineRound(false, false);
             }
         }
         receivedTmp[0] = received.trim();

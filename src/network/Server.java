@@ -106,6 +106,14 @@ public class Server extends Thread{
                     }
                     connectedPlayers--;
                 }
+                case "1wonround" -> {
+                    if (playerAddresses[1] != null)
+                        sendData("1wonround".getBytes(), InetAddress.getByName(playerAddresses[1].split(":")[0]), Integer.parseInt(playerAddresses[1].split(":")[1]));
+                }
+                case "2wonround" -> {
+                    if (playerAddresses[0] != null)
+                        sendData("2wonround".getBytes(), InetAddress.getByName(playerAddresses[0].split(":")[0]), Integer.parseInt(playerAddresses[0].split(":")[1]));
+                }
             }
         }
     }

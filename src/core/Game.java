@@ -75,6 +75,7 @@ public class Game extends JPanel implements Runnable {
 
     public void initNetwork() throws IOException {
         if (JOptionPane.showConfirmDialog(this, "Do you want to play online?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
+            clearStats(false);
             if (JOptionPane.showConfirmDialog(this, "Do you want to run the server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
                 if (JOptionPane.showConfirmDialog(this, "Do you want to run a public server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
                     String port = JOptionPane.showInputDialog(this, "Please enter the server port(49152 - 65535): ");
@@ -94,6 +95,7 @@ public class Game extends JPanel implements Runnable {
                 isOnline = true;
             }
         } else {
+            clearStats(false);
             isOnline = false;
         }
     }
@@ -123,6 +125,8 @@ public class Game extends JPanel implements Runnable {
             case 5 -> client.sendData("move2down".getBytes());
             case 6 -> client.sendData("p2ready".getBytes());
             case 7 -> client.sendData("disconnect".getBytes());
+            case 8 -> client.sendData("1wonround".getBytes());
+            case 9 -> client.sendData("2wonround".getBytes());
         }
     }
 
@@ -132,10 +136,14 @@ public class Game extends JPanel implements Runnable {
 
     public void handleStats(int [] playerScores, boolean eof) throws IOException {
         if(isOnline){
-            Stats stats = new Stats(this, /*server.playerAddresses,*/ playerScores, roundCount, client.port);
+            Stats stats = new Stats(this, null, playerScores, roundCount, client.port);
+            stats.prepareStats(false, false);
             stats.handleOnlineStats();
+            if (eof) {
+                stats.prepareStats(true, false);
+            }
         } else {
-            Stats stats = new Stats(this, /*server.playerAddresses,*/ playerScores, roundCount, -1);
+            Stats stats = new Stats(this, null, playerScores, roundCount, -1);
             stats.prepareStats(false, false);
             stats.handleStats();
             if (eof) {
@@ -144,8 +152,12 @@ public class Game extends JPanel implements Runnable {
         }
     }
 
-    public void clearStats() throws IOException {
-        FileWriter writer = new FileWriter("stats/offlineStats.json", false);
+    public void clearStats(boolean isOnline) throws IOException {
+        FileWriter writer;
+        if (isOnline)
+            writer = new FileWriter("stats/offlineStats.json", false);
+        else
+            writer = new FileWriter("stats/onlineStats.json", false);
         writer.write("");
         writer.close();
     }
@@ -220,7 +232,6 @@ public class Game extends JPanel implements Runnable {
 
     public static void main(String[] args) throws IOException {
         Game pong = new Game();
-        pong.clearStats();
     }
 }
 
