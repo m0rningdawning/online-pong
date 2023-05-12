@@ -110,7 +110,7 @@ public class Game extends JPanel implements Runnable {
         sendData(0);
     }
 
-    public synchronized void setupClient(String ip, String port) throws IOException {
+    public synchronized void setupClient(String ip, String port) {
         client = new Client(ip, Integer.parseInt(port), this);
         client.start();
         sendData(0);
@@ -126,8 +126,6 @@ public class Game extends JPanel implements Runnable {
             case 5 -> client.sendData("move2down".getBytes());
             case 6 -> client.sendData("p2ready".getBytes());
             case 7 -> client.sendData("disconnect".getBytes());
-            case 8 -> client.sendData("1wonround".getBytes());
-            case 9 -> client.sendData("2wonround".getBytes());
         }
     }
 
@@ -135,7 +133,7 @@ public class Game extends JPanel implements Runnable {
         client.sendData(("ball:" + posX + ":" + posY).getBytes());
     }
 
-    public void handleStats(int [] playerScores, boolean eof) throws IOException {
+    public void handleStats(int [] playerScores, boolean eof) {
         if(isOnline){
             stats = new Stats(this, null, playerScores, roundCount, client.port);
             stats.prepareStats(false);

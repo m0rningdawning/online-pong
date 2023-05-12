@@ -1,9 +1,6 @@
 package core;
 
-import network.*;
 import java.awt.event.*;
-import java.io.IOException;
-import java.net.*;
 
 
 public class InputListener extends KeyAdapter{
@@ -28,7 +25,8 @@ public class InputListener extends KeyAdapter{
         if (key == KeyEvent.VK_ESCAPE){
             if (pong.isOnline)
                 pong.sendData(7);
-            pong.stats.prepareStats(true);
+            if (pong.stats != null)
+                pong.stats.prepareStats(true);
             System.exit(0);
         }
         if (key == KeyEvent.VK_SPACE) {

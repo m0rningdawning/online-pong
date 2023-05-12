@@ -1,7 +1,5 @@
 package core;
 
-import data.Stats;
-
 import java.io.IOException;
 import java.util.*;
 import java.awt.*;
@@ -12,7 +10,6 @@ public class Ball{
     double dirX, dirY, currentSpeed = startingSpeed;
     double dirLength;
     Game pong;
-    Stats stats;
 
     Ball(Game pong){
         this.pong = pong;
@@ -36,7 +33,7 @@ public class Ball{
             dirX = -1.0 + (Math.random() * 0.5);
     }
 
-    public void endRound(boolean playerAWon) throws IOException {
+    public void endRound(boolean playerAWon) {
         pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, false);
         setPos();
         initializeDirection();
@@ -47,24 +44,6 @@ public class Ball{
             // Call end menu
         //else
             // Call end menu
-    }
-
-    public void endOnlineRound(boolean playerA, boolean initial) throws IOException {
-        if (initial){
-            if (playerA){
-                pong.sendData(8);
-            } else {
-                pong.sendData(9);
-            }
-        }
-        endRound(playerA);
-//        pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, false);
-//        setPos();
-//        initializeDirection();
-//        currentSpeed = startingSpeed;
-//        pong.platform1.score = pong.platform2.score = 0;
-//        pong.roundCount++;
-//        // Call end menu
     }
 
     public void updateBall(Game pong) throws IOException {
@@ -108,10 +87,7 @@ public class Ball{
             pong.platform2.setPos(false);
             pong.platform2.score++;
             if (pong.platform2.score == Platform.maxScore)
-                if (pong.isOnline)
-                    endOnlineRound(true, true);
-                else
-                    endRound(false);
+                endRound(false);
             pong.player1Ready = pong.player2Ready = false;
         }
 
@@ -121,9 +97,6 @@ public class Ball{
             pong.platform2.setPos(false);
             pong.platform1.score++;
             if (pong.platform1.score == Platform.maxScore)
-                if (pong.isOnline)
-                    endOnlineRound(true, true);
-                else
                     endRound(true);
             pong.player1Ready = pong.player2Ready = false;
         }

@@ -1,7 +1,6 @@
 package network;
 
 import core.Game;
-import core.Platform;
 
 import java.net.*;
 import java.io.IOException;
@@ -68,8 +67,6 @@ public class Client extends Thread{
                 case "p2ready" -> pong.player2Ready = true;
                 case "disconnect1" -> System.out.println("Player 1 disconnected, the server is shutting down.");
                 case "disconnect2" -> System.out.println("Player 2 disconnected.");
-                case "1wonround" -> pong.ball.endOnlineRound(true, false);
-                case "2wonround" -> pong.ball.endOnlineRound(false, false);
             }
         }
         receivedTmp[0] = received.trim();

@@ -1,15 +1,12 @@
 package core;
 
-import java.util.*;
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
 
 public class Platform{
     public double posX, posY;
     public double sPosX;
     public final int width = 20, height = 100;
-    public static final int maxScore = 1;
+    public static final int maxScore = 5;
     public int score = 0;
 
 

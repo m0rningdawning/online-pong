@@ -2,7 +2,6 @@ package network;
 
 import core.*;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.*;
@@ -105,14 +104,6 @@ public class Server extends Thread{
                         sendData("disconnect2".getBytes(), InetAddress.getByName(playerAddresses[0].split(":")[0]), Integer.parseInt(playerAddresses[0].split(":")[1]));
                     }
                     connectedPlayers--;
-                }
-                case "1wonround" -> {
-                    if (playerAddresses[1] != null)
-                        sendData("1wonround".getBytes(), InetAddress.getByName(playerAddresses[1].split(":")[0]), Integer.parseInt(playerAddresses[1].split(":")[1]));
-                }
-                case "2wonround" -> {
-                    if (playerAddresses[0] != null)
-                        sendData("2wonround".getBytes(), InetAddress.getByName(playerAddresses[0].split(":")[0]), Integer.parseInt(playerAddresses[0].split(":")[1]));
                 }
             }
         }
