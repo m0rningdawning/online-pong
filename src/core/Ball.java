@@ -7,11 +7,11 @@ import java.awt.*;
 public class Ball{
     static final int width = 20, height = 20, startingSpeed = 8;
     public double posX, posY;
-    double dirX, dirY, currentSpeed = startingSpeed;
+    public double dirX, dirY, currentSpeed = startingSpeed;
     double dirLength;
     Game pong;
 
-    Ball(Game pong){
+    public Ball(Game pong){
         this.pong = pong;
         setPos();
         initializeDirection();

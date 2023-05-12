@@ -1,0 +1,9 @@
+[
+	{
+		"game": {"isOnline": "true" },
+		"playerAddresses": {"server": "true" },
+		"scores": {"score1": "5", "score2": "3" },
+		"round": {"round": "1" },
+		"port": {"port": "50000" }
+	}
+]

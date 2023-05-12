@@ -15,8 +15,8 @@ import java.io.FileWriter;
 public class Game extends JPanel implements Runnable {
 
     // Game dimensions
-    static final int WIDTH = 800;
-    static final int HEIGHT = 600;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
     static final Dimension FIELD_SIZE = new Dimension(WIDTH, HEIGHT);
 
     // Game state
@@ -52,7 +52,7 @@ public class Game extends JPanel implements Runnable {
     Server server;
     Client client;
 
-    Game() throws IOException{
+    public Game() throws IOException{
         newBall();
         newPlatforms();
         new Field(this);
