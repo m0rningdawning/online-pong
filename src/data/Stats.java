@@ -88,7 +88,7 @@ public class Stats {
 
     public void handleOnlineStats(){
         String gameJson = "{\"isOnline\": \"" + pong.isOnline + "\" " + "}";
-        String playerAddrJson = "{\"Game\": \"" + pong + "\" " + "}";
+        String playerAddrJson = "{\"server\": \"" + pong.isServer + "\" " + "}";
         String scoresJson = "{\"score1\": \"" + scores[0] + "\", \"score2\": \"" + scores[1] + "\" " + "}";
         String roundJson = "{\"round\": \"" + round + "\" " + "}";
         String portJson = "{\"port\": \"" + port + "\" " + "}";
