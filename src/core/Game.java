@@ -45,6 +45,7 @@ public class Game extends JPanel implements Runnable {
     public Platform platform2;
     public Ball ball;
     public KeyboardInput listener;
+    public MouseInput mouseListener;
     public MainMenu mMenu;
     public EndMenu eMenu;
 
@@ -58,7 +59,7 @@ public class Game extends JPanel implements Runnable {
     public Game() throws IOException{
         // Menus
         mMenu = new MainMenu();
-        //eMenu = new EndMenu();
+        eMenu = new EndMenu();
 
         // Game objects
         newBall();
@@ -67,23 +68,22 @@ public class Game extends JPanel implements Runnable {
         this.setFocusable(true);
         this.requestFocus();
 
+        // Background image
         backgroundImage = ImageIO.read(new File("textures/background.png"));
 
         // Input listener
         listener = new KeyboardInput(platform1, platform2, this);
-        //listener.InputListener();
+        mouseListener = new MouseInput(mMenu, eMenu,this);
+
         this.addKeyListener(listener);
+        this.addMouseListener(mouseListener);
 
         // Thread
         thread = new Thread(this);
         startThread();
-
-        // Network Initialization
-        initNetwork();
     }
 
     public void initNetwork() throws IOException {
-        if (JOptionPane.showConfirmDialog(this, "Do you want to play online?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
             clearStats(true);
             if (JOptionPane.showConfirmDialog(this, "Do you want to run the server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
                 if (JOptionPane.showConfirmDialog(this, "Do you want to run a public server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
@@ -103,10 +103,14 @@ public class Game extends JPanel implements Runnable {
                 setupClient(ip, port);
                 isOnline = true;
             }
-        } else {
-            clearStats(false);
-            isOnline = false;
+    }
+
+    public void controlsExplanation(){
+        if (isOnline){
+            JOptionPane.showMessageDialog(this, "Controls: W - up, S - down\nReady: Space");
         }
+        else
+            JOptionPane.showMessageDialog(this, "Player 1 controls: W - up, S - down\nPlayer 2 controls: UP - up, DOWN - down\nReady: Space");
     }
 
     public synchronized void setupServerAndClient(int port, boolean global) throws IOException {
@@ -208,7 +212,7 @@ public class Game extends JPanel implements Runnable {
         double frameTime = 1000000000 / maxFPS;
         double delta = 0;
         long now;
-        if (!playStatus){
+        while (!playStatus){
             repaint();
         }
         while (playStatus) {
