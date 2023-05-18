@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class EndMenu {
-    EndMenu(){
+    public EndMenu(){
 
     }
 }

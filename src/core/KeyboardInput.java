@@ -3,7 +3,7 @@ package core;
 import java.awt.event.*;
 
 
-public class InputListener extends KeyAdapter{
+public class KeyboardInput extends KeyAdapter{
     private Platform platform1;
     private Platform platform2;
     private Game pong;
@@ -13,7 +13,7 @@ public class InputListener extends KeyAdapter{
     static boolean isDownPressed = false;
 
 
-    public InputListener(Platform platform1, Platform platform2, Game pong) {
+    public KeyboardInput(Platform platform1, Platform platform2, Game pong) {
         this.platform1 = platform1;
         this.platform2 = platform2;
         this.pong = pong;

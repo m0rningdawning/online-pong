@@ -1,6 +1,7 @@
 package core;
 
 import data.Stats;
+import menus.*;
 import network.*;
 import java.awt.image.BufferedImage;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class Game extends JPanel implements Runnable {
     static final Dimension FIELD_SIZE = new Dimension(WIDTH, HEIGHT);
 
     // Game state
-    static boolean playStatus = true;
+    static boolean playStatus = false;
 
     // Round count
     public int roundCount = 1;
@@ -43,7 +44,9 @@ public class Game extends JPanel implements Runnable {
     public Platform platform1;
     public Platform platform2;
     public Ball ball;
-    public InputListener listener;
+    public KeyboardInput listener;
+    public MainMenu mMenu;
+    public EndMenu eMenu;
 
     // Thread
     Thread thread;
@@ -53,6 +56,11 @@ public class Game extends JPanel implements Runnable {
     Client client;
 
     public Game() throws IOException{
+        // Menus
+        mMenu = new MainMenu();
+        //eMenu = new EndMenu();
+
+        // Game objects
         newBall();
         newPlatforms();
         new Field(this);
@@ -62,7 +70,7 @@ public class Game extends JPanel implements Runnable {
         backgroundImage = ImageIO.read(new File("textures/background.png"));
 
         // Input listener
-        listener = new InputListener(platform1, platform2, this);
+        listener = new KeyboardInput(platform1, platform2, this);
         //listener.InputListener();
         this.addKeyListener(listener);
 
@@ -138,16 +146,13 @@ public class Game extends JPanel implements Runnable {
             stats = new Stats(this, null, playerScores, roundCount, client.port);
             stats.prepareStats(false);
             stats.handleOnlineStats();
-            if (eof) {
-                stats.prepareStats(true);
-            }
         } else {
             stats = new Stats(this, null, playerScores, roundCount, -1);
             stats.prepareStats(false);
             stats.handleStats();
-            if (eof) {
-                stats.prepareStats(true);
-            }
+        }
+        if (eof) {
+            stats.prepareStats(true);
         }
     }
 
@@ -187,9 +192,12 @@ public class Game extends JPanel implements Runnable {
 
     public void display(Graphics g){
         g.drawImage(backgroundImage, 0, 0, this);
-        ball.display(g);
-        platform1.display(g,true);
-        platform2.display(g,false);
+        if (playStatus){
+            ball.display(g);
+            platform1.display(g,true);
+            platform2.display(g,false);
+        } else
+            mMenu.display(g);
     }
 
     // Main game loop
@@ -200,6 +208,9 @@ public class Game extends JPanel implements Runnable {
         double frameTime = 1000000000 / maxFPS;
         double delta = 0;
         long now;
+        if (!playStatus){
+            repaint();
+        }
         while (playStatus) {
             while (!player1Ready || !player2Ready) {
                 now = System.nanoTime();
