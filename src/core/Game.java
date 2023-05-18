@@ -22,17 +22,22 @@ public class Game extends JPanel implements Runnable {
 
     // Game state
     static boolean playStatus = false;
+    public boolean isRoundEnd = false;
 
     // Round count
     public int roundCount = 1;
 
-    // Player readiness
+    // Player status
     public boolean player1Ready = false;
     public boolean player2Ready = false;
+    public boolean isPlayerAWon = false;
+    public boolean isPlayerBWon = false;
 
     // Online status
     public boolean isOnline = false;
     public boolean isServer = false;
+
+
 
     // Background Image with double-buffering
     BufferedImage bufferedImage;
@@ -59,7 +64,7 @@ public class Game extends JPanel implements Runnable {
     public Game() throws IOException{
         // Menus
         mMenu = new MainMenu();
-        eMenu = new EndMenu();
+        eMenu = new EndMenu(this);
 
         // Game objects
         newBall();
@@ -196,11 +201,15 @@ public class Game extends JPanel implements Runnable {
 
     public void display(Graphics g){
         g.drawImage(backgroundImage, 0, 0, this);
-        if (playStatus){
+        if (playStatus && !isRoundEnd){
             ball.display(g);
             platform1.display(g,true);
             platform2.display(g,false);
-        } else
+        }
+        else if (isRoundEnd) {
+            eMenu.display(g);
+        }
+        else if (!playStatus)
             mMenu.display(g);
     }
 
@@ -222,6 +231,7 @@ public class Game extends JPanel implements Runnable {
                 lastTime = now;
                 repaint();
                 if (delta >= 1) {
+                    repaint();
                     listener.keyPressed(new KeyEvent(this, 0, 0, 0, 0, ' '));
                     delta--;
                 }

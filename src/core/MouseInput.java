@@ -52,6 +52,17 @@ public class MouseInput implements MouseListener {
                 System.exit(0);
             }
         }
+        if (pong.isRoundEnd){
+            // Main menu button
+            if (mx >= Game.WIDTH / 2 - 85 && mx <= Game.WIDTH / 2 + 85 && my >= 350 && my <= 395) {
+                Game.playStatus = false;
+                pong.isRoundEnd = false;
+            }
+            // Quit button
+            if (mx >= Game.WIDTH / 2 - 42 && mx <= Game.WIDTH / 2 + 42 && my >= 450 && my <= 495) {
+                System.exit(0);
+            }
+        }
     }
 
     @Override

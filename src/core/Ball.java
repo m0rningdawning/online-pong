@@ -40,10 +40,15 @@ public class Ball{
         currentSpeed = startingSpeed;
         pong.platform1.score = pong.platform2.score = 0;
         pong.roundCount++;
-        //if (pong.isOnline)
-            // Call end menu
-        //else
-            // Call end menu
+        pong.isRoundEnd = true;
+        if (playerAWon)
+            pong.isPlayerAWon = true;
+        else
+            pong.isPlayerBWon = true;
+//        if (pong.isOnline)
+//
+//        else
+
     }
 
     public void updateBall(Game pong) throws IOException {
