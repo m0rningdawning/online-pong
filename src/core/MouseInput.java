@@ -49,6 +49,8 @@ public class MouseInput implements MouseListener {
             }
             // Quit button
             if (mx >= Game.WIDTH / 2 - 42 && mx <= Game.WIDTH / 2 + 42 && my >= 450 && my <= 495) {
+                if (pong.stats != null)
+                    pong.stats.prepareStats(true);
                 System.exit(0);
             }
         }
@@ -57,9 +59,19 @@ public class MouseInput implements MouseListener {
             if (mx >= Game.WIDTH / 2 - 85 && mx <= Game.WIDTH / 2 + 85 && my >= 350 && my <= 395) {
                 Game.playStatus = false;
                 pong.isRoundEnd = false;
+                if (pong.isOnline) {
+                    pong.isOnline = false;
+                    pong.sendData(7);
+                    if (pong.stats != null)
+                        pong.stats.prepareStats(true);
+                }
             }
             // Quit button
             if (mx >= Game.WIDTH / 2 - 42 && mx <= Game.WIDTH / 2 + 42 && my >= 450 && my <= 495) {
+                if (pong.isOnline)
+                    pong.sendData(7);
+                if (pong.stats != null)
+                    pong.stats.prepareStats(true);
                 System.exit(0);
             }
         }
