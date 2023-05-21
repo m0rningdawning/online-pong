@@ -89,15 +89,15 @@ public class KeyboardInput extends KeyAdapter{
         }
         if (isSPressed) {
             if (pong.isOnline) {
-                if (pong.isServer && platform1.posY < Game.HEIGHT - platform1.height * 1.4){
+                if (pong.isServer && platform1.posY < Game.HEIGHT - platform1.height){
                     platform1.posY += 10;
                     pong.sendData(2);
                 }
-                else if (!pong.isServer && platform2.posY < Game.HEIGHT - platform2.height * 1.4){
+                else if (!pong.isServer && platform2.posY < Game.HEIGHT - platform2.height){
                     platform2.posY += 10;
                     pong.sendData(5);
                 }
-            } else if (platform1.posY < Game.HEIGHT - platform1.height * 1.4)
+            } else if (platform1.posY < Game.HEIGHT - platform1.height)
                 platform1.posY += 10;
         }
         if (isUpPressed) {
@@ -115,15 +115,15 @@ public class KeyboardInput extends KeyAdapter{
         }
         if (isDownPressed) {
             if (pong.isOnline) {
-                if (pong.isServer && platform1.posY < Game.HEIGHT - platform1.height * 1.4){
+                if (pong.isServer && platform1.posY < Game.HEIGHT - platform1.height){
                     platform1.posY += 10;
                     pong.sendData(2);
                 }
-                else if (!pong.isServer && platform2.posY < Game.HEIGHT - platform2.height * 1.4){
+                else if (!pong.isServer && platform2.posY < Game.HEIGHT - platform2.height){
                     platform2.posY += 10;
                     pong.sendData(5);
                 }
-            } else if (platform2.posY < Game.HEIGHT - platform1.height * 1.4)
+            } else if (platform2.posY < Game.HEIGHT - platform1.height)
                 platform2.posY += 10;
         }
     }

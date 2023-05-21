@@ -17,7 +17,6 @@ public class Platform{
     // Texture
     BufferedImage image;
     BufferedImage sprite;
-    BufferedImage sprite2;
     TexturePaint texture;
     TexturePaint texture2;
 
@@ -33,8 +32,8 @@ public class Platform{
             texture = new TexturePaint(sprite, new Rectangle(width, height));
         }
         else {
-            sprite2 = image.getSubimage(65, 25, width, height);
-            texture2 = new TexturePaint(sprite2, new Rectangle(width, height));
+            sprite = image.getSubimage(65, 25, width, height);
+            texture2 = new TexturePaint(sprite, new Rectangle(width, height));
         }
     }
 
@@ -67,7 +66,7 @@ public class Platform{
             posX = 0;
         else
             posX = Game.WIDTH - width;
-        posY = (double) Game.HEIGHT /2 - (double) height /2;
+        posY = (double) Game.HEIGHT / 2 - (double) height / 2;
     }
 
     public void setScorePos(Graphics g, boolean playerA, Font font) {

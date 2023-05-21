@@ -114,7 +114,7 @@ public class Ball{
             pong.player1Ready = pong.player2Ready = false;
         }
 
-        if (posX > Game.WIDTH - width * 2) {
+        if (posX > Game.WIDTH - (2 * pong.platform2.width - (double) pong.platform2.width / 2)) {
             resetBall(-1.0 + (Math.random() * 0.5));
             pong.platform1.setPos(true);
             pong.platform2.setPos(false);
