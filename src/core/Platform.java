@@ -1,6 +1,11 @@
 package core;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Platform{
     public double posX, posY;
@@ -9,24 +14,50 @@ public class Platform{
     public static final int maxScore = 5;
     public int score = 0;
 
+    // Texture
+    BufferedImage image;
+    BufferedImage sprite;
+    TexturePaint texture;
+    TexturePaint texture2;
 
-    public Platform(boolean playerA){
+    public Platform(boolean playerA) throws IOException {
+        image = ImageIO.read(new File("textures/sprites.png"));
+        setTexture(playerA);
         setPos(playerA);
     }
 
+    public void setTexture(boolean playerA){
+        if (playerA) {
+            sprite = image.getSubimage(15, 25, width, height);
+            texture = new TexturePaint(sprite, new Rectangle(width, height));
+        }
+        else {
+            sprite = image.getSubimage(65, 25, width, height);
+            texture2 = new TexturePaint(sprite, new Rectangle(width, height));
+        }
+    }
+
     public void display(Graphics gfx1, boolean playerA){
+        Graphics2D gfx2 = (Graphics2D) gfx1;
         if (playerA)
-            gfx1.setColor(Color.blue);
+            gfx2.setPaint(texture);
         else
-            gfx1.setColor(Color.yellow);
-        gfx1.fillRect((int)posX, (int)posY, width, height);
+            gfx2.setPaint(texture2);
+        //gfx1.fillRect((int)posX, (int)posY, width, height);
+        Rectangle2D rect = new Rectangle2D.Double((int)posX, (int)posY, width, height);
+        gfx2.fill(rect);
         drawScore(gfx1, playerA);
+
     }
 
     public void drawScore(Graphics gfx1, boolean playerA) {
         Font font = new Font("ARIAL", Font.PLAIN, 48);
         setScorePos(gfx1, playerA, font);
         gfx1.setFont(font);
+        if (playerA)
+            gfx1.setColor(Color.RED);
+        else
+            gfx1.setColor(Color.BLUE);
         gfx1.drawString(Integer.toString(score), (int)sPosX, 48);
     }
 

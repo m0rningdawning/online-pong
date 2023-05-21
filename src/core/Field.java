@@ -10,7 +10,7 @@ public class Field extends JFrame{
         frame.getContentPane().add(pong);
         //frame.setBackground(new Color(27,119,90));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setPreferredSize(Game.FIELD_SIZE);
         frame.setMinimumSize(Game.FIELD_SIZE);
         frame.setLocationRelativeTo(null);

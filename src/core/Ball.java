@@ -1,8 +1,13 @@
 package core;
 
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.awt.*;
+import javax.imageio.*;
 
 public class Ball{
     static final int width = 20, height = 20, startingSpeed = 8;
@@ -11,10 +16,23 @@ public class Ball{
     double dirLength;
     Game pong;
 
-    public Ball(Game pong){
+    // Texture
+    BufferedImage image;
+    BufferedImage sprite;
+    TexturePaint texture;
+
+
+    public Ball(Game pong) throws IOException {
         this.pong = pong;
+        image = ImageIO.read(new File("textures/sprites.png"));
+        setTexture();
         setPos();
         initializeDirection();
+    }
+
+    public void setTexture(){
+        sprite = image.getSubimage(115, 15, width, height);
+        texture = new TexturePaint(sprite, new Rectangle(width, height));
     }
 
     public void initializeDirection(){
@@ -119,8 +137,13 @@ public class Ball{
     }
 
     public void display(Graphics gfx1){
-        gfx1.setColor(Color.WHITE);
-        gfx1.fillOval((int)posX, (int)posY, width, height);
+        Graphics2D gfx2 = (Graphics2D) gfx1;
+        gfx2.setPaint(texture);
+
+        Ellipse2D oval = new Ellipse2D.Double((int)posX, (int)posY, width, height);
+        gfx2.fill(oval);
+//        gfx1.setColor(Color.WHITE);
+//        gfx1.fillOval((int)posX, (int)posY, width, height);
     }
 
     public void setPos(){

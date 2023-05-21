@@ -1,5 +1,13 @@
 package core;
 
+/*
+TODO
+- Finish the end menu: final score and readiness
+- Fix json
+- Find bugs to fix
+ */
+
+
 import data.Stats;
 import menus.*;
 import network.*;
@@ -183,11 +191,11 @@ public class Game extends JPanel implements Runnable {
         thread.interrupt();
     }
 
-    public void newBall(){
+    public void newBall() throws IOException {
         ball = new Ball(this);
     }
 
-    public void newPlatforms(){
+    public void newPlatforms() throws IOException {
         platform1 = new Platform(true);
         platform2 = new Platform(false);
     }
