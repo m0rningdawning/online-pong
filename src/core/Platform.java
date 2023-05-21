@@ -17,13 +17,14 @@ public class Platform{
     // Texture
     BufferedImage image;
     BufferedImage sprite;
+    BufferedImage sprite2;
     TexturePaint texture;
     TexturePaint texture2;
 
     public Platform(boolean playerA) throws IOException {
+        setPos(playerA);
         image = ImageIO.read(new File("textures/sprites.png"));
         setTexture(playerA);
-        setPos(playerA);
     }
 
     public void setTexture(boolean playerA){
@@ -32,8 +33,8 @@ public class Platform{
             texture = new TexturePaint(sprite, new Rectangle(width, height));
         }
         else {
-            sprite = image.getSubimage(65, 25, width, height);
-            texture2 = new TexturePaint(sprite, new Rectangle(width, height));
+            sprite2 = image.getSubimage(65, 25, width, height);
+            texture2 = new TexturePaint(sprite2, new Rectangle(width, height));
         }
     }
 
@@ -65,7 +66,7 @@ public class Platform{
         if (playerA)
             posX = 0;
         else
-            posX = Game.WIDTH - (int)(width * 1.5);
+            posX = Game.WIDTH - width;
         posY = (double) Game.HEIGHT /2 - (double) height /2;
     }
 
