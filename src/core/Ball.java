@@ -85,7 +85,7 @@ public class Ball{
         }
 
         // Collision detection of the ball with the horizontal sides of the screen
-        if (posY < 0 || posY > Game.HEIGHT - height * 3) {
+        if (posY < 0 || posY > Game.HEIGHT - height) {
             dirY = -dirY;
         }
 
@@ -147,7 +147,7 @@ public class Ball{
     }
 
     public void setPos(){
-        posX = (double) Game.WIDTH /2 - width;
-        posY = (double) Game.HEIGHT /2 - height;
+        posX = (double) Game.WIDTH / 2 - (double) width / 2;
+        posY = (double) Game.HEIGHT /2 - (double) height / 2;
     }
 }

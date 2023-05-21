@@ -72,7 +72,7 @@ public class Platform{
     public void setScorePos(Graphics g, boolean playerA, Font font) {
         int strWidth = g.getFontMetrics(font).stringWidth(Integer.toString(score));
         if(playerA)
-            sPosX = (double) Game.WIDTH /2 - strWidth * 2 - (double) Game.HEIGHT /8;
+            sPosX = (double) Game.WIDTH /2 - strWidth - (double) Game.HEIGHT /8;
         else
             sPosX = (double) Game.WIDTH /2 + (double) Game.HEIGHT /8;
     }
