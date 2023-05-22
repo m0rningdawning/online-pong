@@ -42,6 +42,11 @@ public class KeyboardInput extends KeyAdapter{
             }
             else
                 pong.player1Ready = pong.player2Ready = true;
+
+            if (pong.isRoundEnd){
+                pong.isRoundEnd = false;
+                pong.player1Ready = pong.player2Ready = true;
+            }
         }
         if (key == KeyEvent.VK_W){
             isWPressed = true;

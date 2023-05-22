@@ -59,10 +59,14 @@ public class Ball{
         pong.platform1.score = pong.platform2.score = 0;
         pong.roundCount++;
         pong.isRoundEnd = true;
-        if (playerAWon)
+        if (playerAWon) {
             pong.isPlayerAWon = true;
-        else
+            pong.isPlayerBWon = false;
+        }
+        else {
             pong.isPlayerBWon = true;
+            pong.isPlayerAWon = false;
+        }
 //        if (pong.isOnline)
 //
 //        else

@@ -59,6 +59,7 @@ public class MouseInput implements MouseListener {
             if (mx >= Game.WIDTH / 2 - 85 && mx <= Game.WIDTH / 2 + 85 && my >= 350 && my <= 395) {
                 Game.playStatus = false;
                 pong.isRoundEnd = false;
+                pong.roundCount = 0;
                 if (pong.isOnline) {
                     pong.isOnline = false;
                     pong.sendData(7);

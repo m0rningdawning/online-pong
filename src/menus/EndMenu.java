@@ -11,6 +11,7 @@ public class EndMenu {
     String playerAWonString = "Player A won!";
     String playerBWonString = "Player B won!";
     String subtitle = "Ready for a rematch?";
+    String pressSpace = "Press SPACE for a rematch";
     //private boolean playerAWon;
 
     // Buttons
@@ -40,13 +41,38 @@ public class EndMenu {
         Graphics2D g2d = (Graphics2D) g;
         Font font = new Font("ARIAL", Font.BOLD, 80);
         Font font2 = new Font("ARIAL", Font.BOLD, 20);
-        if (pong.isPlayerAWon){
-            drawTitle(g, font, playerAWonString, Color.blue, 100);
-            drawTitle(g, font2, subtitle, Color.yellow, 140);
+        Font font3 = new Font("ARIAL", Font.BOLD, 40);
+        if (pong.isOnline){
+            if (pong.isPlayerAWon){
+                drawTitle(g, font, playerAWonString, Color.blue, 100);
+                drawTitle(g, font2, subtitle, Color.yellow, 140);
+                if (pong.player1Ready)
+                    drawTitle(g, font2, "READY", Color.green, 180);
+                else
+                    drawTitle(g, font2, "READY", Color.red, 180);
+            }
+            if (pong.isPlayerBWon){
+                drawTitle(g, font, playerBWonString, Color.yellow, 100);
+                drawTitle(g, font2, subtitle, Color.blue, 140);
+                if (pong.player1Ready)
+                    drawTitle(g, font2, "READY", Color.green, 180);
+                else
+                    drawTitle(g, font2, "READY", Color.red, 180);
+            }
         }
         else {
-            drawTitle(g, font, playerBWonString, Color.yellow, 100);
-            drawTitle(g, font2, subtitle, Color.blue, 140);
+            if (pong.isPlayerAWon){
+                drawTitle(g, font, playerAWonString, Color.blue, 100);
+                drawTitle(g, font3, pressSpace, Color.red, 260);
+                drawTitle(g, font2, subtitle, Color.yellow, 140);
+
+            }
+            if (pong.isPlayerBWon){
+                drawTitle(g, font, playerBWonString, Color.yellow, 100);
+                drawTitle(g, font3, pressSpace, Color.red, 260);
+                drawTitle(g, font2, subtitle, Color.blue, 140);
+
+            }
         }
         drawButtons(g2d, mainMenuButton, "MAIN MENU");
         drawButtons(g2d, quitButton, "QUIT");
