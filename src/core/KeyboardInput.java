@@ -39,13 +39,13 @@ public class KeyboardInput extends KeyAdapter{
                     pong.player2Ready = true;
                     pong.sendData(6);
                 }
-            }
-            else
-                pong.player1Ready = pong.player2Ready = true;
 
-            if (pong.isRoundEnd){
-                pong.isRoundEnd = false;
-                pong.player1Ready = pong.player2Ready = true;
+            }
+            else {
+                if (Game.playStatus)
+                    pong.player1Ready = pong.player2Ready = true;
+                if (pong.isRoundEnd)
+                    pong.isRoundEnd = false;
             }
         }
         if (key == KeyEvent.VK_W){

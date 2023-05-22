@@ -216,6 +216,8 @@ public class Game extends JPanel implements Runnable {
         }
         else if (isRoundEnd) {
             eMenu.display(g);
+            if (player1Ready && player2Ready)
+                isRoundEnd = false;
         }
         else if (!playStatus)
             mMenu.display(g);

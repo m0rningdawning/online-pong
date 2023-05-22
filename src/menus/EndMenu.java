@@ -46,19 +46,20 @@ public class EndMenu {
             if (pong.isPlayerAWon){
                 drawTitle(g, font, playerAWonString, Color.blue, 100);
                 drawTitle(g, font2, subtitle, Color.yellow, 140);
-                if (pong.player1Ready)
-                    drawTitle(g, font2, "READY", Color.green, 180);
-                else
-                    drawTitle(g, font2, "READY", Color.red, 180);
             }
             if (pong.isPlayerBWon){
                 drawTitle(g, font, playerBWonString, Color.yellow, 100);
                 drawTitle(g, font2, subtitle, Color.blue, 140);
-                if (pong.player1Ready)
-                    drawTitle(g, font2, "READY", Color.green, 180);
-                else
-                    drawTitle(g, font2, "READY", Color.red, 180);
             }
+            if (pong.player1Ready)
+                drawTitle(g, font2, "READY", Color.green, 160);
+            else
+                drawTitle(g, font2, "READY", Color.red, 160);
+
+            if (pong.player2Ready)
+                drawTitle(g, font2, "READY", Color.green, 180);
+            else
+                drawTitle(g, font2, "READY", Color.red, 180);
         }
         else {
             if (pong.isPlayerAWon){
