@@ -32,9 +32,17 @@ public class EndMenu {
         g.drawString(title, Game.WIDTH / 2 - getWidth(g, font, title) / 2, y);
     }
 
-    public void drawButtons(Graphics2D g, Rectangle button, String title){
+    public void drawButtons(Graphics2D g, Rectangle button, String title, boolean isQuit){
         g.draw(button);
-        g.drawString(title, button.x + 20, button.y + 30);
+        if (isQuit) {
+            //g.setColor(Color.red);
+            g.drawString(title, button.x + 20, button.y + 30);
+        }
+        else {
+            //g.setColor(Color.yellow);
+            g.drawString(title, button.x + 15, button.y + 30);
+        }
+
     }
 
     public void display(Graphics g){
@@ -52,14 +60,14 @@ public class EndMenu {
                 drawTitle(g, font2, subtitle, Color.blue, 140);
             }
             if (pong.player1Ready)
-                drawTitle(g, font2, "READY", Color.green, 160);
+                drawTitle(g, font2, "READY", Color.green, 240);
             else
-                drawTitle(g, font2, "READY", Color.red, 160);
+                drawTitle(g, font2, "READY", Color.red, 240);
 
             if (pong.player2Ready)
-                drawTitle(g, font2, "READY", Color.green, 180);
+                drawTitle(g, font2, "READY", Color.green, 270);
             else
-                drawTitle(g, font2, "READY", Color.red, 180);
+                drawTitle(g, font2, "READY", Color.red, 270);
         }
         else {
             if (pong.isPlayerAWon){
@@ -75,7 +83,7 @@ public class EndMenu {
 
             }
         }
-        drawButtons(g2d, mainMenuButton, "MAIN MENU");
-        drawButtons(g2d, quitButton, "QUIT");
+        drawButtons(g2d, mainMenuButton, "MAIN MENU", false);
+        drawButtons(g2d, quitButton, "QUIT", true);
     }
 }
