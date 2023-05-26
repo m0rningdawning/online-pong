@@ -27,9 +27,17 @@ public class MainMenu {
         g.drawString(title, Game.WIDTH / 2 - getWidth(g, font, title) / 2, y);
     }
 
-    public void drawButtons(Graphics2D g, Rectangle button, String title){
+    public void drawButtons(Graphics2D g, Rectangle button, String title, boolean isQuit){
         g.draw(button);
-        g.drawString(title, button.x + 20, button.y + 30);
+        //g.drawString(title, button.x + 20, button.y + 30);
+        if (isQuit) {
+            //g.setColor(Color.red);
+            g.drawString(title, button.x + 19, button.y + 30);
+        }
+        else {
+            //g.setColor(Color.yellow);
+            g.drawString(title, button.x + 18, button.y + 30);
+        }
     }
 
     public void display(Graphics g){
@@ -38,8 +46,8 @@ public class MainMenu {
         Font font2 = new Font("ARIAL", Font.BOLD, 20);
         drawTitle(g, font, title, Color.blue, 100);
         drawTitle(g, font2, subtitle,Color.yellow, 140);
-        drawButtons(g2d, playButton, "PLAY");
-        drawButtons(g2d, playOnlineButton, "PLAY ONLINE");
-        drawButtons(g2d, quitButton, "QUIT");
+        drawButtons(g2d, playButton, "PLAY", true);
+        drawButtons(g2d, playOnlineButton, "PLAY ONLINE", false);
+        drawButtons(g2d, quitButton, "QUIT", true);
     }
 }

@@ -2,44 +2,15 @@
 	{
 		"game": {"isOnline": "true" },
 		"playerAddresses": {"server": "true" },
-		"scores": {"score1": "1", "score2": "0" },
-		"round": {"round": "0" },
-		"port": {"port": "50000" }
-	},
-	{
-		"game": {"isOnline": "true" },
-		"playerAddresses": {"server": "false" },
-		"scores": {"score1": "1", "score2": "0" },
-		"round": {"round": "1" },
-		"port": {"port": "50000" }
-	},
-	{
-		"game": {"isOnline": "true" },
-		"playerAddresses": {"server": "true" },
-		"scores": {"score1": "1", "score2": "0" },
+		"scores": {"score1": "0", "score2": "1" },
 		"round": {"round": "1" },
 		"port": {"port": "50000" }
 	},
 	{
 		"game": {"isOnline": "true" },
 		"playerAddresses": {"server": "false" },
-		"scores": {"score1": "1", "score2": "0" },
-		"round": {"round": "2" },
-		"port": {"port": "50000" }
-	},
-	{
-		"game": {"isOnline": "true" },
-		"playerAddresses": {"server": "true" },
-		"scores": {"score1": "1", "score2": "0" },
-		"round": {"round": "2" },
-		"port": {"port": "50000" }
-	},
-	{
-		"game": {"isOnline": "true" },
-		"playerAddresses": {"server": "false" },
-		"scores": {"score1": "1", "score2": "0" },
-		"round": {"round": "3" },
+		"scores": {"score1": "0", "score2": "1" },
+		"round": {"round": "1" },
 		"port": {"port": "50000" }
 	}
-]
 ]
