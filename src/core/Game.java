@@ -69,6 +69,7 @@ public class Game extends JPanel implements Runnable {
     Server server;
     Client client;
 
+    // Game constructor
     public Game() throws IOException{
         // Menus
         mMenu = new MainMenu();
@@ -84,7 +85,7 @@ public class Game extends JPanel implements Runnable {
         // Background image
         backgroundImage = ImageIO.read(new File("textures/background.png"));
 
-        // Input listener
+        // Input listeners
         listener = new KeyboardInput(platform1, platform2, this);
         mouseListener = new MouseInput(mMenu, eMenu,this);
 
@@ -95,7 +96,7 @@ public class Game extends JPanel implements Runnable {
         thread = new Thread(this);
         startThread();
     }
-
+    // Network and stats setup
     public void initNetwork() throws IOException {
             clearStats(true);
             if (JOptionPane.showConfirmDialog(this, "Do you want to run the server?", "Choose", JOptionPane.YES_NO_OPTION) == 0) {
@@ -141,6 +142,7 @@ public class Game extends JPanel implements Runnable {
         sendData(0);
     }
 
+    // Data sending hub
     public void sendData(int type){
         switch (type) {
             case 0 -> client.sendData("connect".getBytes());
@@ -158,6 +160,7 @@ public class Game extends JPanel implements Runnable {
         client.sendData(("ball:" + posX + ":" + posY).getBytes());
     }
 
+    // Stats handling
     public void handleStats(int [] playerScores, boolean eof) {
         if(isOnline){
             stats = new Stats(this, null, playerScores, roundCount, client.port);
