@@ -11,9 +11,13 @@ TODO
 import data.Stats;
 import menus.*;
 import network.*;
+import resources.AudioEffects;
+
 import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.awt.event.*;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.imageio.*;
 import java.io.*;
@@ -45,8 +49,6 @@ public class Game extends JPanel implements Runnable {
     public boolean isOnline = false;
     public boolean isServer = false;
 
-
-
     // Background Image with double-buffering
     BufferedImage bufferedImage;
     BufferedImage backgroundImage;
@@ -61,6 +63,7 @@ public class Game extends JPanel implements Runnable {
     public MouseInput mouseListener;
     public MainMenu mMenu;
     public EndMenu eMenu;
+    public AudioEffects audioEffects;
 
     // Thread
     Thread thread;
@@ -69,7 +72,7 @@ public class Game extends JPanel implements Runnable {
     Server server;
     Client client;
 
-    public Game() throws IOException{
+    public Game() throws IOException, UnsupportedAudioFileException {
         // Menus
         mMenu = new MainMenu();
         eMenu = new EndMenu(this);
@@ -83,6 +86,9 @@ public class Game extends JPanel implements Runnable {
 
         // Background image
         backgroundImage = ImageIO.read(new File("textures/background.png"));
+
+        // Sfx
+        audioEffects = new AudioEffects();
 
         // Input listener
         listener = new KeyboardInput(platform1, platform2, this);
@@ -253,7 +259,7 @@ public class Game extends JPanel implements Runnable {
                 if (delta >= 1) {
                     try {
                         ball.updateBall(this);
-                    } catch (IOException e) {
+                    } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
                         throw new RuntimeException(e);
                     }
                     listener.updatePlatforms();
@@ -264,7 +270,7 @@ public class Game extends JPanel implements Runnable {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, UnsupportedAudioFileException {
         Game pong = new Game();
     }
 }

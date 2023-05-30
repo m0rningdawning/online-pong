@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.*;
 import java.awt.*;
 import javax.imageio.*;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Ball{
     static final int width = 20, height = 20, startingSpeed = 8;
@@ -73,7 +75,7 @@ public class Ball{
 
     }
 
-    public void updateBall(Game pong) throws IOException {
+    public void updateBall(Game pong) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         dirLength = Math.sqrt(dirX * dirX + dirY * dirY);
 
         if (pong.isOnline){
@@ -90,6 +92,7 @@ public class Ball{
 
         // Collision detection of the ball with the horizontal sides of the screen
         if (posY < 0 || posY > Game.HEIGHT - height) {
+            pong.audioEffects.play(false);
             dirY = -dirY;
         }
 
@@ -97,12 +100,14 @@ public class Ball{
 
         // Platform one
         if (posX < pong.platform1.posX + pong.platform1.width && posY + height > pong.platform1.posY && posY < pong.platform1.posY + pong.platform1.height) {
+            pong.audioEffects.play(true);
             currentSpeed += 0.2;
             setDir(true);
         }
 
         // Platform two
         if (posX + width > pong.platform2.posX && posY + height > pong.platform2.posY && posY < pong.platform2.posY + pong.platform2.height) {
+            pong.audioEffects.play(true);
             currentSpeed += 0.2;
             setDir(false);
         }
