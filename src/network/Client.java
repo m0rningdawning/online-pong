@@ -28,7 +28,7 @@ public class Client extends Thread{
 
     public void run(){
         while (true){
-            buf = new byte[1024];
+            buf = new byte[256];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             try {
                 socket.receive(packet);

@@ -12,7 +12,6 @@ public class EndMenu {
     String playerBWonString = "Player B won!";
     String subtitle = "Ready for a rematch?";
     String pressSpace = "Press SPACE for a rematch";
-    //private boolean playerAWon;
 
     // Buttons
     public Rectangle mainMenuButton = new Rectangle(Game.WIDTH / 2 - 75, 350, 150,45);
@@ -42,7 +41,6 @@ public class EndMenu {
             //g.setColor(Color.yellow);
             g.drawString(title, button.x + 15, button.y + 30);
         }
-
     }
 
     public void display(Graphics g){
