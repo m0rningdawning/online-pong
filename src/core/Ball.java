@@ -118,8 +118,10 @@ public class Ball{
             pong.platform1.setPos(true);
             pong.platform2.setPos(false);
             pong.platform2.score++;
-            if (pong.platform2.score == Platform.maxScore)
+            if (pong.platform2.score == Platform.maxScore) {
+                pong.audioEffects.playEnd(true);
                 endRound(false);
+            }
             pong.player1Ready = pong.player2Ready = false;
         }
 
@@ -128,8 +130,10 @@ public class Ball{
             pong.platform1.setPos(true);
             pong.platform2.setPos(false);
             pong.platform1.score++;
-            if (pong.platform1.score == Platform.maxScore)
-                    endRound(true);
+            if (pong.platform1.score == Platform.maxScore) {
+                pong.audioEffects.playEnd(true);
+                endRound(true);
+            }
             pong.player1Ready = pong.player2Ready = false;
         }
     }

@@ -1,7 +1,10 @@
 package menus;
 
 import core.Game;
+
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
+import java.io.IOException;
 
 public class EndMenu {
     //Game
@@ -19,6 +22,10 @@ public class EndMenu {
 
     public EndMenu(Game pong){
         this.pong = pong;
+    }
+
+    public void playAudio() throws UnsupportedAudioFileException, IOException {
+        pong.audioEffects.playEnd(true);
     }
 
     public int getWidth(Graphics g, Font font, String title){
@@ -72,6 +79,7 @@ public class EndMenu {
                 drawTitle(g, font, playerAWonString, Color.blue, 100);
                 drawTitle(g, font3, pressSpace, Color.red, 260);
                 drawTitle(g, font2, subtitle, Color.yellow, 140);
+
 
             }
             if (pong.isPlayerBWon){

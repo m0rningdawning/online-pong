@@ -7,7 +7,6 @@ TODO
 - Find bugs to fix
  */
 
-
 import data.Stats;
 import menus.*;
 import network.*;
@@ -211,11 +210,15 @@ public class Game extends JPanel implements Runnable {
     public void paint(Graphics g){
         bufferedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
         gfx = bufferedImage.getGraphics();
-        display(gfx);
+        try {
+            display(gfx);
+        } catch (UnsupportedAudioFileException | IOException e) {
+            throw new RuntimeException(e);
+        }
         g.drawImage(bufferedImage, 0, 0,this);
     }
 
-    public void display(Graphics g){
+    public void display(Graphics g) throws UnsupportedAudioFileException, IOException {
         g.drawImage(backgroundImage, 0, 0, this);
         if (playStatus && !isRoundEnd){
             ball.display(g);
