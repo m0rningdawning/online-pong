@@ -2,11 +2,12 @@ package menus;
 
 import core.Game;
 import java.awt.*;
+import resources.FontCreator;
 
 public class MainMenu {
     // Title
     String title = "PONG";
-    String subtitle = "totally bugless ;)";
+    String subtitle = "TOTALLY BUGLESS ;)";
 
     // Buttons
     public Rectangle playButton = new Rectangle(Game.WIDTH / 2 - 45, 250, 90, 45);
@@ -14,7 +15,8 @@ public class MainMenu {
     public Rectangle quitButton = new Rectangle(Game.WIDTH / 2 - 42, 450, 85, 45);
 
     public MainMenu(){
-        super();
+        FontCreator.loadAndRegisterFont("resources/fonts/hello-denver-display.denver-display-regular-regular.ttf", true);
+        FontCreator.loadAndRegisterFont("resources/fonts/Monoton-Regular.ttf", false);
     }
 
     public int getWidth(Graphics g, Font font, String title){
@@ -42,8 +44,8 @@ public class MainMenu {
 
     public void display(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        Font font = new Font("ARIAL", Font.BOLD, 80);
-        Font font2 = new Font("ARIAL", Font.BOLD, 20);
+        Font font = FontCreator.monoton.deriveFont(80f);
+        Font font2 = FontCreator.denver.deriveFont(25f);
         drawTitle(g, font, title, Color.blue, 100);
         drawTitle(g, font2, subtitle,Color.yellow, 140);
         drawButtons(g2d, playButton, "PLAY", true);

@@ -6,7 +6,7 @@ import java.awt.*;
 public class Field extends JFrame {
     Field(Game pong) {
         setTitle("Pong");
-        setIconImage(Toolkit.getDefaultToolkit().getImage("textures/icon.png"));
+        setIconImage(Toolkit.getDefaultToolkit().getImage("resources/textures/icon.png"));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         pong.setPreferredSize(Game.FIELD_SIZE);

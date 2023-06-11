@@ -1,6 +1,7 @@
 package menus;
 
 import core.Game;
+import resources.FontCreator;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
@@ -13,8 +14,8 @@ public class EndMenu {
     // Title
     String playerAWonString = "Player A won!";
     String playerBWonString = "Player B won!";
-    String subtitle = "Ready for a rematch?";
-    String pressSpace = "Press SPACE for a rematch";
+    String subtitle = "READY FOR A REMATCH?";
+    String pressSpace = "PRESS SPACE FOR A REMATCH!";
 
     // Buttons
     public Rectangle mainMenuButton = new Rectangle(Game.WIDTH / 2 - 75, 350, 150,45);
@@ -22,6 +23,8 @@ public class EndMenu {
 
     public EndMenu(Game pong){
         this.pong = pong;
+        FontCreator.loadAndRegisterFont("resources/fonts/hello-denver-display.denver-display-regular-regular.ttf", true);
+        FontCreator.loadAndRegisterFont("resources/fonts/Monoton-Regular.ttf", false);
     }
 
     public void playAudio() throws UnsupportedAudioFileException, IOException {
@@ -52,9 +55,9 @@ public class EndMenu {
 
     public void display(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
-        Font font = new Font("ARIAL", Font.BOLD, 80);
-        Font font2 = new Font("ARIAL", Font.BOLD, 20);
-        Font font3 = new Font("ARIAL", Font.BOLD, 40);
+        Font font = FontCreator.monoton.deriveFont(80f);
+        Font font2 = FontCreator.denver.deriveFont(25f);
+        Font font3 = FontCreator.denver.deriveFont(40f);
         if (pong.isOnline){
             if (pong.isPlayerAWon){
                 drawTitle(g, font, playerAWonString, Color.blue, 100);

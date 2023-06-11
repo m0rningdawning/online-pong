@@ -11,6 +11,7 @@ import data.Stats;
 import menus.*;
 import network.*;
 import resources.AudioEffects;
+import resources.FontCreator;
 
 import java.awt.image.BufferedImage;
 import java.awt.*;
@@ -84,7 +85,7 @@ public class Game extends JPanel implements Runnable {
         this.requestFocus();
 
         // Background image
-        backgroundImage = ImageIO.read(new File("textures/background.png"));
+        backgroundImage = ImageIO.read(new File("resources/textures/background.png"));
 
         // Sfx
         audioEffects = new AudioEffects();

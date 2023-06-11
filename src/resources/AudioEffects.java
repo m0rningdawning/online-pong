@@ -14,10 +14,10 @@ public class AudioEffects {
     public boolean isPlaying = false;
 
     public AudioEffects() throws UnsupportedAudioFileException, IOException {
-        hit = new File("sfx/hit.wav");
-        sides = new File("sfx/sides.wav");
-        victory = new File("sfx/victory.wav");
-        defeat = new File("sfx/defeat.wav");
+        hit = new File("resources/sfx/hit.wav");
+        sides = new File("resources/sfx/sides.wav");
+        victory = new File("resources/sfx/victory.wav");
+        defeat = new File("resources/sfx/defeat.wav");
     }
 
     public void play(boolean isHit) throws IOException, LineUnavailableException, UnsupportedAudioFileException {

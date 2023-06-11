@@ -1,5 +1,7 @@
 package core;
 
+import resources.FontCreator;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -22,8 +24,9 @@ public class Platform{
 
     public Platform(boolean playerA) throws IOException {
         setPos(playerA);
-        image = ImageIO.read(new File("textures/sprites.png"));
+        image = ImageIO.read(new File("resources/textures/sprites.png"));
         setTexture(playerA);
+        FontCreator.loadAndRegisterFont("resources/fonts/hello-denver-display.denver-display-regular-regular.ttf", true);
     }
 
     public void setTexture(boolean playerA){
@@ -51,7 +54,7 @@ public class Platform{
     }
 
     public void drawScore(Graphics gfx1, boolean playerA) {
-        Font font = new Font("ARIAL", Font.PLAIN, 48);
+        Font font = FontCreator.denver.deriveFont(50f);
         setScorePos(gfx1, playerA, font);
         gfx1.setFont(font);
         if (playerA)

@@ -26,7 +26,7 @@ public class Ball{
 
     public Ball(Game pong) throws IOException {
         this.pong = pong;
-        image = ImageIO.read(new File("textures/sprites.png"));
+        image = ImageIO.read(new File("resources/textures/sprites.png"));
         setTexture();
         setPos();
         initializeDirection();
