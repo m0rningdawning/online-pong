@@ -11,7 +11,7 @@ public class BallTest {
     public void testInitializeDirection() throws IOException, UnsupportedAudioFileException {
         Game pong = new Game();
         Ball ball = new Ball(pong);
-        ball.initializeDirection();
-        assertTrue(ball.dirX != 0 && ball.dirY != 0);
+        ball.setPos();
+        assertTrue(ball.posX != 0 && ball.posY != 0);
     }
 }

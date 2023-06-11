@@ -29,7 +29,7 @@ public class Ball{
         image = ImageIO.read(new File("resources/textures/sprites.png"));
         setTexture();
         setPos();
-        initializeDirection();
+        resetBall((int) Math.floor(Math.random() * 3) - 1);
     }
 
     public void setTexture(){
@@ -37,26 +37,31 @@ public class Ball{
         texture = new TexturePaint(sprite, new Rectangle(width, height));
     }
 
-    public void initializeDirection(){
-        do {
-            dirX = -1 + (Math.random() * 2);
-        } while (dirX == 0);
-        do {
-            dirY = -1 + (Math.random() * 2);
-        } while (dirY == 0);
+    public void checkZone(boolean playerA) {
+        double zone;
+        double deviation = (Math.random() < 0.5 ? -1 : 1) * Math.random() * 0.25;
+
+        if (playerA) {
+            zone = (posY + height - pong.platform1.posY) / pong.platform1.height;
+            dirX = 0.5 + (Math.random() * 0.5);
+        } else {
+            zone = (posY + height - pong.platform2.posY) / pong.platform2.height;
+            dirX = -0.5 - (Math.random() * 0.5);
+        }
+
+        if (zone < 0.33)
+            dirY = -0.5 - deviation;
+        else if (zone < 0.66)
+            dirY = deviation;
+        else
+            dirY = 0.5 + deviation;
     }
 
-    public void setDir(boolean playerA){
-        if (playerA)
-            dirX = 0.5 + (Math.random() * 0.5);
-        else
-            dirX = -1.0 + (Math.random() * 0.5);
-    }
 
     public void endRound(boolean playerAWon) {
         pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, false);
         setPos();
-        initializeDirection();
+        resetBall((int) Math.floor(Math.random() * 3) - 1);
         currentSpeed = startingSpeed;
         pong.platform1.score = pong.platform2.score = 0;
         pong.roundCount++;
@@ -102,14 +107,14 @@ public class Ball{
         if (posX < pong.platform1.posX + pong.platform1.width && posY + height > pong.platform1.posY && posY < pong.platform1.posY + pong.platform1.height) {
             pong.audioEffects.play(true);
             currentSpeed += 0.2;
-            setDir(true);
+            checkZone(true);
         }
 
         // Platform two
         if (posX + width > pong.platform2.posX && posY + height > pong.platform2.posY && posY < pong.platform2.posY + pong.platform2.height) {
             pong.audioEffects.play(true);
             currentSpeed += 0.2;
-            setDir(false);
+            checkZone(false);
         }
 
         // Score registration
@@ -140,13 +145,9 @@ public class Ball{
 
     public void resetBall(double scoredDir){
         setPos();
-        initializeDirection();
         currentSpeed = startingSpeed;
-        Random rand = new Random();
         dirX = scoredDir;
-        dirY = rand.nextInt(2);
-        if (dirY == 0)
-            dirY = -1;
+        dirY = (Math.random() < 0.5 ? -1 : 1) * Math.random() * 0.25;
     }
 
     public void display(Graphics gfx1){
