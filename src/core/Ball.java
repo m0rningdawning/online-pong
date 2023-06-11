@@ -29,7 +29,7 @@ public class Ball{
         image = ImageIO.read(new File("resources/textures/sprites.png"));
         setTexture();
         setPos();
-        resetBall((int) Math.floor(Math.random() * 3) - 1);
+        resetBall((int) ((Math.random() < 0.5 ? -1 : 1) * Math.ceil(Math.random())));
     }
 
     public void setTexture(){
@@ -61,7 +61,7 @@ public class Ball{
     public void endRound(boolean playerAWon) {
         pong.handleStats(new int[]{pong.platform1.score, pong.platform2.score}, false);
         setPos();
-        resetBall((int) Math.floor(Math.random() * 3) - 1);
+        resetBall((int)((Math.random() < 0.5 ? -1 : 1) * Math.ceil(Math.random())));
         currentSpeed = startingSpeed;
         pong.platform1.score = pong.platform2.score = 0;
         pong.roundCount++;
