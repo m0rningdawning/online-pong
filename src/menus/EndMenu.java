@@ -18,8 +18,8 @@ public class EndMenu {
     String pressSpace = "PRESS SPACE FOR A REMATCH!";
 
     // Buttons
-    public Rectangle mainMenuButton = new Rectangle(Game.WIDTH / 2 - 75, 350, 150,45);
-    public Rectangle quitButton = new Rectangle(Game.WIDTH / 2 - 45, 450, 90, 45);
+    public Rectangle mainMenuButton = new Rectangle(Game.WIDTH / 2 - 75, 400, 150,45);
+    public Rectangle quitButton = new Rectangle(Game.WIDTH / 2 - 45, 500, 90, 45);
 
     public EndMenu(Game pong){
         this.pong = pong;

@@ -28,7 +28,7 @@ public class MouseInput implements MouseListener {
         int my = e.getY();
         if (!Game.playStatus) {
             // Play button
-            if (mx >= Game.WIDTH / 2 - 42 && mx <= Game.WIDTH / 2 + 42 && my >= 250 && my <= 295) {
+            if (mx >= Game.WIDTH / 2 - 42 && mx <= Game.WIDTH / 2 + 42 && my >= 300 && my <= 345) {
                 try {
                     pong.clearStats(false);
                 } catch (IOException ex) {
@@ -38,7 +38,7 @@ public class MouseInput implements MouseListener {
                 Game.playStatus = true;
             }
             // Play online button
-            if (mx >= Game.WIDTH / 2 - 85 && mx <= Game.WIDTH / 2 + 85 && my >= 350 && my <= 395) {
+            if (mx >= Game.WIDTH / 2 - 85 && mx <= Game.WIDTH / 2 + 85 && my >= 400 && my <= 445) {
                 try {
                     pong.initNetwork();
                 } catch (IOException ex) {
@@ -48,7 +48,7 @@ public class MouseInput implements MouseListener {
                 Game.playStatus = true;
             }
             // Quit button
-            if (mx >= Game.WIDTH / 2 - 42 && mx <= Game.WIDTH / 2 + 42 && my >= 450 && my <= 495) {
+            if (mx >= Game.WIDTH / 2 - 42 && mx <= Game.WIDTH / 2 + 42 && my >= 500 && my <= 545) {
                 if (pong.stats != null)
                     pong.stats.prepareStats(true);
                 System.exit(0);
@@ -56,7 +56,7 @@ public class MouseInput implements MouseListener {
         }
         if (pong.isRoundEnd){
             // Main menu button
-            if (mx >= Game.WIDTH / 2 - 85 && mx <= Game.WIDTH / 2 + 85 && my >= 350 && my <= 395) {
+            if (mx >= Game.WIDTH / 2 - 85 && mx <= Game.WIDTH / 2 + 85 && my >= 400 && my <= 445) {
                 Game.playStatus = false;
                 pong.isRoundEnd = false;
                 pong.roundCount = 0;
@@ -68,7 +68,7 @@ public class MouseInput implements MouseListener {
                 }
             }
             // Quit button
-            if (mx >= Game.WIDTH / 2 - 42 && mx <= Game.WIDTH / 2 + 42 && my >= 450 && my <= 495) {
+            if (mx >= Game.WIDTH / 2 - 42 && mx <= Game.WIDTH / 2 + 42 && my >= 500 && my <= 545) {
                 if (pong.isOnline)
                     pong.sendData(7);
                 if (pong.stats != null)

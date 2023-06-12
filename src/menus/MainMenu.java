@@ -10,9 +10,9 @@ public class MainMenu {
     String subtitle = "TOTALLY BUGLESS ;)";
 
     // Buttons
-    public Rectangle playButton = new Rectangle(Game.WIDTH / 2 - 45, 250, 90, 45);
-    public Rectangle playOnlineButton = new Rectangle(Game.WIDTH / 2 - 85, 350, 170,45);
-    public Rectangle quitButton = new Rectangle(Game.WIDTH / 2 - 42, 450, 85, 45);
+    public Rectangle playButton = new Rectangle(Game.WIDTH / 2 - 45, 300, 90, 45);
+    public Rectangle playOnlineButton = new Rectangle(Game.WIDTH / 2 - 85, 400, 170,45);
+    public Rectangle quitButton = new Rectangle(Game.WIDTH / 2 - 42, 500, 85, 45);
 
     public MainMenu(){
         FontCreator.loadAndRegisterFont("resources/fonts/hello-denver-display.denver-display-regular-regular.ttf", true);
