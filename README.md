@@ -3,23 +3,23 @@
 
 ## Setup  
 
-- Open `sdk` folder and run `InstallSDK.bat`.
+1. Open `sdk` folder and run `InstallSDK.bat`.
 
-- Wait until the installation is finished.
+2. Wait until the installation is finished.
 
-- Start `online-pong.jar`.
+3. Start `online-pong.jar`.
 
 ## How to play
 
 ### Local
 
-- Press `PLAY`.
+1. Press `PLAY`.
 
 - P1: `W` - Up, `S` - Down.
 
 - P2: `ArrowUP` - Up, `ArrowDown` - Down.
 
-- Press `Space` when ready to start playing.
+2. Press `Space` when ready to start playing.
 
 ### LAN
 
@@ -27,23 +27,23 @@
 
 #### Host
 
-- `Do you want to run a server?` select `Yes`.  
+1. `Do you want to run a server?` select `Yes`.  
 
-- `Do you want to run a public server?` select `No`.  
+2. `Do you want to run a public server?` select `No`.  
 
-- Enter a port in a safe range. E.G. 50000.  
+3. Enter a port in a safe range. E.G. 50000.  
 
-- Share the IP and the port number with Client and wait for him to connect.  
+4. Share the IP and the port number with Client and wait for him to connect.  
 
-- Press `Space` when ready to play.
+5. Press `Space` when ready to play.
 
 #### Client
 
-- `Do you want to run a server?` select `No`.  
+1. `Do you want to run a server?` select `No`.  
 
-- Enter the port and the IP of the server.
+2. Enter the port and the IP of the server.
 
-- Press `Space` when ready to play.
+3. Press `Space` when ready to play.
 
 ## Statistics
 
@@ -58,19 +58,19 @@
 
 ## Credits
 App Icon:  
-https://www.flaticon.com/free-icon/ping-pong_1687539?term=ping+pong&page=1&position=50&origin=tag&related_id=1687539
+- https://www.flaticon.com/free-icon/ping-pong_1687539?term=ping+pong&page=1&position=50&origin=tag&related_id=1687539
 
 Background:  
-https://opengameart.org/content/space-star-background  
+- https://opengameart.org/content/space-star-background  
 
 Fonts:  
-https://fonts.google.com/specimen/Monoton  
-https://www.1001fonts.com/hello-denver-display-font.html  
+- https://fonts.google.com/specimen/Monoton  
+- https://www.1001fonts.com/hello-denver-display-font.html  
 
 Ball and Platforms:  
-https://opengameart.org/content/pong-graphics
+- https://opengameart.org/content/pong-graphics
 
 SFX:  
-https://free-loops.com/7033-ping-pong-.html  
-https://www.youtube.com/watch?v=3sGatRdAeJ0&list=PPSV  
-https://orangefreesounds.com/game-over-ident/  
+- https://free-loops.com/7033-ping-pong-.html  
+- https://www.youtube.com/watch?v=3sGatRdAeJ0&list=PPSV  
+- https://orangefreesounds.com/game-over-ident/  
