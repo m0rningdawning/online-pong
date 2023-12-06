@@ -1,6 +1,11 @@
 # online-pong
 2D online Pong clone created in Java that features a fully functional local (on the same machine) mode as well as LAN multiplayer.
 
+![GitHub language count](https://img.shields.io/github/languages/count/m0rningdawning/online-pong)
+![GitHub top language](https://img.shields.io/github/languages/top/m0rningdawning/online-pong) 
+![GitHub last commit](https://img.shields.io/github/last-commit/m0rningdawning/online-pong)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
 ## Setup  
 
 1. Open `sdk` folder and run `InstallSDK.bat`.
